@@ -1,0 +1,159 @@
+﻿<Window x:Class="TimeInfo.TimeInfoUi.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewModels="clr-namespace:TimeInfo.TimeInfoUi.ViewModels"
+        xmlns:infrastructure="clr-namespace:TimeInfo.TimeInfoUi.Infrastructure"
+        mc:Ignorable="d"
+        Title="TimeInfo"
+        Height="300"
+        Width="240"
+        Icon="/TimeInfo.TimeInfoUi;component/AppIcon_Clock.ico"
+        WindowStartupLocation="CenterScreen">
+
+  <!-- Initialize the ViewModel -->
+  <Window.DataContext>
+    <viewModels:MainWindowViewModel />
+  </Window.DataContext>
+
+  <Window.Resources>
+    <infrastructure:OvertimeStyleConverter x:Key="overtimeColorConverter">
+
+      <infrastructure:OvertimeStyleConverter.Overtime>
+        <Style TargetType="xctk:TimeSpanUpDown">
+          <Setter Property="Background" Value="DarkSeaGreen" />
+        </Style>
+      </infrastructure:OvertimeStyleConverter.Overtime>
+
+      <infrastructure:OvertimeStyleConverter.Undertime>
+        <Style TargetType="xctk:TimeSpanUpDown">
+          <Setter Property="Background" Value="LightCoral" />
+        </Style>
+      </infrastructure:OvertimeStyleConverter.Undertime>
+
+    </infrastructure:OvertimeStyleConverter>
+  </Window.Resources>
+
+  <Grid Margin="5">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <GroupBox Grid.Column="0"
+              Grid.Row="0"
+              Margin="5"
+              Padding="5"
+              Header="Arbeitstag">
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="80" />
+          <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+          <RowDefinition Height="25" />
+          <RowDefinition Height="25" />
+          <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0"
+               Grid.Row="0"
+               Content="Startzeit" />
+
+        <xctk:TimePicker Grid.Column="1"
+                         Grid.Row="0"
+                         FormatString="HH:mm:ss"
+                         Format="Custom"
+                         ShowButtonSpinner="False"
+                         ShowDropDownButton="False"
+                         UpdateValueOnEnterKey="True"
+                         Value="{Binding Path=Today.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="1"
+               Content="Pause"/>
+
+        <xctk:TimeSpanUpDown Grid.Column="1"
+                             Grid.Row="1"
+                             ShowButtonSpinner="False"
+                             Value="{Binding Path=Today.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="2"
+               Content="Soll-Zeit" />
+
+        <xctk:TimeSpanUpDown Grid.Column="1"
+                             Grid.Row="2"
+                             ShowButtonSpinner="False"
+                             Value="{Binding Path=Today.DailyWorkLength, UpdateSourceTrigger=PropertyChanged}" />
+
+      </Grid>
+      
+    </GroupBox>
+
+    <GroupBox Grid.Column="0"
+              Grid.Row="1"
+              Margin="5"
+              Padding="5"
+              Header="Rest">
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="80" />
+          <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+          <RowDefinition Height="25" />
+          <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0"
+               Grid.Row="0"
+               Content="Verbleibend" />
+
+        <xctk:TimeSpanUpDown Grid.Column="1"
+                             Grid.Row="0"
+                             IsReadOnly="True"
+                             AllowSpin="False"
+                             ShowButtonSpinner="False"
+                             Style="{Binding Path=Today.RemainingTime, Converter={StaticResource overtimeColorConverter}}"
+                             Value="{Binding Path=Today.RemainingTime, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="1"
+               Content="Zielzeit" />
+
+        <xctk:TimePicker Grid.Column="1"
+                         Grid.Row="1"
+                         IsReadOnly="True"
+                         AllowSpin="False"
+                         ShowButtonSpinner="False"
+                         ShowDropDownButton="False"
+                         FormatString="HH:mm:ss"
+                         Format="Custom"
+                         Value="{Binding Path=Today.TargetTime, UpdateSourceTrigger=PropertyChanged}" />
+
+      </Grid>
+
+    </GroupBox>
+
+    <Button Grid.Column="0"
+            Grid.Row="2"
+            Margin="5"
+            Height="30"
+            Content="Aktualisieren"
+            IsDefault="True"
+            Command="{Binding Path=UpdateCommand}"/>
+  </Grid>
+</Window>
+
