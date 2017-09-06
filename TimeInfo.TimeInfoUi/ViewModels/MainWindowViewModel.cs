@@ -4,14 +4,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.TimeInfoUi.ViewModels
+namespace TimeTool.TimeToolUi.ViewModels
 {
   using System;
 
   using GalaSoft.MvvmLight;
   using GalaSoft.MvvmLight.CommandWpf;
 
-  using TimeInfo.BusinessLogic;
+  using TimeTool.BusinessLogic;
 
   /// <summary>
   /// Provides interaction logic for the MainWindow.xaml view.

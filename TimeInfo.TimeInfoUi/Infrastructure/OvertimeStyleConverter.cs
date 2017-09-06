@@ -4,15 +4,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.TimeInfoUi.Infrastructure
+namespace TimeTool.TimeToolUi.Infrastructure
 {
   using System;
   using System.Globalization;
   using System.Windows;
   using System.Windows.Data;
-
-  using TimeInfo.Contracts;
-  using TimeInfo.TimeInfoUi.ViewModels;
 
   /// <summary>
   /// Finds the background color that corresponds to the overtime/ undertime working time.

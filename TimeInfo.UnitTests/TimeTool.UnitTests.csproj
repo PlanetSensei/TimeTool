@@ -6,8 +6,8 @@
     <ProjectGuid>{08CAB1FC-B037-4AC5-BA7D-5FDC703F0E25}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeInfo.UnitTests</RootNamespace>
-    <AssemblyName>TimeInfo.UnitTests</AssemblyName>
+    <RootNamespace>TimeTool.UnitTests</RootNamespace>
+    <AssemblyName>TimeTool.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,13 +67,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TimeInfo.BusinessLogic\TimeInfo.BusinessLogic.csproj">
+    <ProjectReference Include="..\TimeInfo.BusinessLogic\TimeTool.BusinessLogic.csproj">
       <Project>{C5B10262-7A73-4940-B259-E230EF6B44DE}</Project>
-      <Name>TimeInfo.BusinessLogic</Name>
+      <Name>TimeTool.BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TimeInfo.Contracts\TimeInfo.Contracts.csproj">
+    <ProjectReference Include="..\TimeInfo.Contracts\TimeTool.Contracts.csproj">
       <Project>{9184E08A-EAB6-4243-9344-994C5188E666}</Project>
-      <Name>TimeInfo.Contracts</Name>
+      <Name>TimeTool.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

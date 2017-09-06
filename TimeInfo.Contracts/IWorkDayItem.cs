@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.Contracts
+namespace TimeTool.Contracts
 {
   using System;
 
@@ -17,6 +17,12 @@ namespace TimeInfo.Contracts
     /// Gets or sets the expected length of work on this day.
     /// </summary>
     TimeSpan DailyWorkLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets the delta time that shows whether the user worked overtime or undertime.
+    /// </summary>
+    TimeSpan RemainingTime { get; set; }
+
     /// <summary>
     /// Gets or sets the time when the user started work on this day.
     /// </summary>

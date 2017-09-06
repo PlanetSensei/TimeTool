@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.UnitTests.BusinessLogic
+namespace TimeTool.UnitTests.BusinessLogic
 {
   using System;
   using System.Diagnostics.CodeAnalysis;
@@ -13,9 +13,9 @@ namespace TimeInfo.UnitTests.BusinessLogic
 
   using Moq;
 
-  using TimeInfo.BusinessLogic;
-  using TimeInfo.Contracts;
-  using TimeInfo.UnitTests.Properties;
+  using TimeTool.BusinessLogic;
+  using TimeTool.Contracts;
+  using TimeTool.UnitTests.Properties;
 
   /// <summary>
   /// This is a test class for Calculator and is intended to contain all relevant unit tests.

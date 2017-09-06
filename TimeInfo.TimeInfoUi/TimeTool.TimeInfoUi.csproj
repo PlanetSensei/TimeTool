@@ -7,8 +7,8 @@
     <ProjectGuid>{A1C404CC-CCFA-42F5-81A0-B4F9AC589D09}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeInfo.TimeInfoUi</RootNamespace>
-    <AssemblyName>TimeInfo.TimeInfoUi</AssemblyName>
+    <RootNamespace>TimeTool.TimeToolUi</RootNamespace>
+    <AssemblyName>TimeTool.TimeToolUi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\TimeInfo.TimeInfoUi.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\TimeTool.TimeToolUi.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\TimeInfo.TimeInfoUi.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\TimeTool.TimeToolUi.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>
@@ -107,7 +107,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\OvertimeStyleConverter.cs" />
-    <Compile Include="Infrastructure\OvertimeStyleSelector.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\WorkDayViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -160,13 +159,13 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TimeInfo.BusinessLogic\TimeInfo.BusinessLogic.csproj">
+    <ProjectReference Include="..\TimeInfo.BusinessLogic\TimeTool.BusinessLogic.csproj">
       <Project>{C5B10262-7A73-4940-B259-E230EF6B44DE}</Project>
-      <Name>TimeInfo.BusinessLogic</Name>
+      <Name>TimeTool.BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TimeInfo.Contracts\TimeInfo.Contracts.csproj">
+    <ProjectReference Include="..\TimeInfo.Contracts\TimeTool.Contracts.csproj">
       <Project>{9184E08A-EAB6-4243-9344-994C5188E666}</Project>
-      <Name>TimeInfo.Contracts</Name>
+      <Name>TimeTool.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

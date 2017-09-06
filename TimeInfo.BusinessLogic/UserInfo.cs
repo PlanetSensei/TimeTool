@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.BusinessLogic
+namespace TimeTool.BusinessLogic
 {
   using System;
 

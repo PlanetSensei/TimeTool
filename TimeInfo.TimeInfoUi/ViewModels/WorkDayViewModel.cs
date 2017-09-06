@@ -4,12 +4,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.TimeInfoUi.ViewModels
+namespace TimeTool.TimeToolUi.ViewModels
 {
   using System;
+
   using GalaSoft.MvvmLight;
-  using TimeInfo.BusinessLogic;
-  using TimeInfo.Contracts;
+
+  using TimeTool.BusinessLogic;
+  using TimeTool.Contracts;
 
   /// <summary>
   /// Represents a single day's work time information.
@@ -45,7 +47,6 @@ namespace TimeInfo.TimeInfoUi.ViewModels
     // TODO: Wenn Pausenzeit automatisch, dann kann sie aus den Settings entfernt werden
     // TODO: Ändere Startzeit in UserSettings und speichere sie beim Beenden der App
     // TODO: Implementiere NotifyIcon
-    // TODO: Aktualisiere die Verbleibende Zeit auch bei Events vom TimeSpinner
 
     /// <summary>
     /// Gets or sets the expected length of work on this day.

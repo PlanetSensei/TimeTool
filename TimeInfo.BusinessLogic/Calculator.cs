@@ -4,11 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.BusinessLogic
+namespace TimeTool.BusinessLogic
 {
   using System;
 
-  using TimeInfo.Contracts;
+  using TimeTool.Contracts;
 
   /// <summary>
   /// Processes the work times.

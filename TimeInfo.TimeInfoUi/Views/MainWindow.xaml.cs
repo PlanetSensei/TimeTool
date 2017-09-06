@@ -4,13 +4,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeInfo.TimeInfoUi.Views
+namespace TimeTool.TimeToolUi.Views
 {
   using System;
   using System.Windows;
   using System.Windows.Controls;
 
-  using TimeInfo.TimeInfoUi.ViewModels;
+  using TimeTool.TimeToolUi.ViewModels;
 
   using Xceed.Wpf.Toolkit;
 
