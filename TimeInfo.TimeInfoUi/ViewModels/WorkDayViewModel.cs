@@ -24,6 +24,11 @@ namespace TimeTool.TimeToolUi.ViewModels
     private TimeSpan defaultDailyWorkLenth;
 
     /// <summary>
+    /// Gets or sets the date part of the work day.
+    /// </summary>
+    private DateTime date;
+
+    /// <summary>
     /// Gets or sets the calculated difference time that shows the user whether he worked overtime or undertime.
     /// </summary>
     private TimeSpan remainingTime;
@@ -62,6 +67,22 @@ namespace TimeTool.TimeToolUi.ViewModels
       {
         this.Set(ref this.defaultDailyWorkLenth, value);
         this.UpdateTimeValues();
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the date part of the work day.
+    /// </summary>
+    public DateTime Date
+    {
+      get
+      {
+        return this.date;
+      }
+
+      set
+      {
+        this.Set(ref this.date, value);
       }
     }
 
@@ -132,12 +153,17 @@ namespace TimeTool.TimeToolUi.ViewModels
     }
 
     /// <summary>
+    /// Gets or sets the unique identifier of the current work day.
+    /// </summary>
+    public int WorkDayId { get; set; }
+
+    /// <summary>
     /// Processes the current values to update the displayed values.
     /// </summary>
     private void UpdateTimeValues()
     {
-      this.RemainingTime = Calculator.GetDeltaTime(this, DateTime.Now);
-      this.TargetTime = Calculator.GetTargetTime(this);
+      this.RemainingTime = Calculator.GetDeltaTime(this.StartTime, this.DailyWorkLength, this.TotalBreakLength, DateTime.Now);
+      this.TargetTime = Calculator.GetTargetTime(this.StartTime, this.DailyWorkLength, this.TotalBreakLength);
     }
   }
 }

@@ -149,7 +149,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
@@ -166,6 +168,10 @@
     <ProjectReference Include="..\TimeInfo.Contracts\TimeTool.Contracts.csproj">
       <Project>{9184E08A-EAB6-4243-9344-994C5188E666}</Project>
       <Name>TimeTool.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TimeTool.DataAccess\TimeTool.DataAccess.csproj">
+      <Project>{B2340FFE-56DE-4A2A-9F42-59A4A71F5FF3}</Project>
+      <Name>TimeTool.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

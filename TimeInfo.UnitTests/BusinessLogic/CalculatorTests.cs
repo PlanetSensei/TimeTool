@@ -34,13 +34,12 @@ namespace TimeTool.UnitTests.BusinessLogic
       DateTime currentTime = new DateTime(2017, 8, 15, 17, 12, 0);
       TimeSpan expectedDelta = new TimeSpan(0, 0, 0);
 
-      var workDayMock = new Mock<IWorkDayInfo>();
-      workDayMock.SetupProperty(prop => prop.StartTime, new DateTime(2017, 8, 15, 9, 0, 0));
-      workDayMock.SetupProperty(prop => prop.DailyWorkLength, new TimeSpan(7, 42, 0));
-      workDayMock.SetupProperty(prop => prop.TotalBreakLength, new TimeSpan(0, 30, 0));
+      var startTime = new DateTime(2017, 8, 15, 9, 0, 0);
+      var dailyWorkLength = new TimeSpan(7, 42, 0);
+      var totalBreakLength = new TimeSpan(0, 30, 0);
 
       // Act
-      TimeSpan actual = Calculator.GetDeltaTime(workDayMock.Object, currentTime);
+      TimeSpan actual = Calculator.GetDeltaTime(startTime, dailyWorkLength, totalBreakLength, currentTime);
 
       // Assert
       Assert.AreEqual(expectedDelta, actual);
@@ -56,13 +55,12 @@ namespace TimeTool.UnitTests.BusinessLogic
       DateTime currentTime = new DateTime(2017, 8, 15, 18, 12, 0);
       TimeSpan expectedDelta = new TimeSpan(1, 0, 0);
 
-      var workDayMock = new Mock<IWorkDayInfo>();
-      workDayMock.SetupProperty(prop => prop.StartTime, new DateTime(2017, 8, 15, 9, 0, 0));
-      workDayMock.SetupProperty(prop => prop.DailyWorkLength, new TimeSpan(7, 42, 0));
-      workDayMock.SetupProperty(prop => prop.TotalBreakLength, new TimeSpan(0, 30, 0));
+      var startTime = new DateTime(2017, 8, 15, 9, 0, 0);
+      var dailyWorkLength = new TimeSpan(7, 42, 0);
+      var totalBreakLength = new TimeSpan(0, 30, 0);
 
       // Act
-      TimeSpan actual = Calculator.GetDeltaTime(workDayMock.Object, currentTime);
+      TimeSpan actual = Calculator.GetDeltaTime(startTime, dailyWorkLength, totalBreakLength, currentTime);
 
       // Assert
       Assert.AreEqual(expectedDelta, actual);
@@ -78,50 +76,15 @@ namespace TimeTool.UnitTests.BusinessLogic
       DateTime currentTime = new DateTime(2017, 8, 15, 16, 12, 0);
       TimeSpan expectedDelta = new TimeSpan(-1, 0, 0);
 
-      var workDayMock = new Mock<IWorkDayInfo>();
-      workDayMock.SetupProperty(prop => prop.StartTime, new DateTime(2017, 8, 15, 9, 0, 0));
-      workDayMock.SetupProperty(prop => prop.DailyWorkLength, new TimeSpan(7, 42, 0));
-      workDayMock.SetupProperty(prop => prop.TotalBreakLength, new TimeSpan(0, 30, 0));
+      var startTime = new DateTime(2017, 8, 15, 9, 0, 0);
+      var dailyWorkLength = new TimeSpan(7, 42, 0);
+      var totalBreakLength = new TimeSpan(0, 30, 0);
 
       // Act
-      TimeSpan actual = Calculator.GetDeltaTime(workDayMock.Object, currentTime);
+      TimeSpan actual = Calculator.GetDeltaTime(startTime, dailyWorkLength, totalBreakLength, currentTime);
 
       // Assert
       Assert.AreEqual(expectedDelta, actual);
-    }
-
-    /// <summary>
-    /// Test for method GetTargetTime().
-    /// </summary>
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void GetDeltaTimeUsingNullReferenceThrowsException()
-    {
-      // Arrange
-      // n/a
-
-      // Act
-      Calculator.GetDeltaTime(null, DateTime.MinValue);
-
-      // Assert
-      Assert.Fail(Resources.ThisPointShoulNotBeReached);
-    }
-
-    /// <summary>
-    /// Test for method GetTargetTime().
-    /// </summary>
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void GetTargetTimeUsingNullReferenceThrowsException()
-    {
-      // Arrange
-      // n/a
-
-      // Act
-      Calculator.GetTargetTime(null);
-
-      // Assert
-      Assert.Fail(Resources.ThisPointShoulNotBeReached);
     }
 
     /// <summary>
@@ -132,13 +95,13 @@ namespace TimeTool.UnitTests.BusinessLogic
     {
       // Arrange
       DateTime expectedTime = new DateTime(2017, 08, 15, 17, 45, 0);
-      var workDayMock = new Mock<IWorkDayInfo>();
-      workDayMock.SetupProperty(prop => prop.StartTime, new DateTime(2017, 08, 15, 9, 33, 0));
-      workDayMock.SetupProperty(prop => prop.DailyWorkLength, new TimeSpan(7, 42, 0));
-      workDayMock.SetupProperty(prop => prop.TotalBreakLength, new TimeSpan(0, 30, 0));
+
+      var startTime = new DateTime(2017, 08, 15, 9, 33, 0);
+      var dailyWorkLength = new TimeSpan(7, 42, 0);
+      var totalBreakLength = new TimeSpan(0, 30, 0);
 
       // Act
-      var actual = Calculator.GetTargetTime(workDayMock.Object);
+      var actual = Calculator.GetTargetTime(startTime, dailyWorkLength, totalBreakLength);
 
       // Assert
       Assert.AreEqual(expectedTime, actual);

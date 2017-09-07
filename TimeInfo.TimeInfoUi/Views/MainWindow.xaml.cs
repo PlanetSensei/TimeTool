@@ -30,13 +30,15 @@ namespace TimeTool.TimeToolUi.Views
     private void TimePicker_TextChanged(object sender, TextChangedEventArgs e)
     {
       var picker = (TimePicker)sender;
-      //picker.Focus();
       
       var viewModel = (MainWindowViewModel)this.DataContext;
       viewModel.Today.StartTime = (DateTime)picker.Value;
+    }
 
-      //viewModel.Today.TargetTime = Calculator.GetTargetTime(viewModel.Today);
-      //viewModel.Today.RemainingTime = Calculator.GetDeltaTime(viewModel.Today, DateTime.Now);
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      var viewModel = (MainWindowViewModel)this.DataContext;
+      viewModel.Save();
     }
   }
 }

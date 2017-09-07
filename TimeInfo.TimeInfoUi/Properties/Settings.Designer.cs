@@ -35,9 +35,18 @@ namespace TimeTool.TimeToolUi.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:30:00")]
-        public global::System.TimeSpan DefaultTotalBreak {
+        public global::System.TimeSpan DefaultBreakLength {
             get {
-                return ((global::System.TimeSpan)(this["DefaultTotalBreak"]));
+                return ((global::System.TimeSpan)(this["DefaultBreakLength"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Temp\\NoSql\\TimeTool.db")]
+        public string DatabaseLocation {
+            get {
+                return ((string)(this["DatabaseLocation"]));
             }
         }
     }

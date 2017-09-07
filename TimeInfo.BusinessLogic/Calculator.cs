@@ -8,8 +8,6 @@ namespace TimeTool.BusinessLogic
 {
   using System;
 
-  using TimeTool.Contracts;
-
   /// <summary>
   /// Processes the work times.
   /// </summary>
@@ -18,17 +16,14 @@ namespace TimeTool.BusinessLogic
     /// <summary>
     /// Calculates the difference from start time to current time.
     /// </summary>
-    /// <param name="workDay">Contains the time information of a single work day.</param>
+    /// <param name="startTime">Contains date and time of the point in time when work started.</param>
+    /// <param name="dailyWorkLength">Contains the pure length of the work day.</param>
+    /// <param name="totalBreakLength">Contains the total sum of breaks during the work day.</param>
     /// <param name="currentTime">Defines the current time against which the work day time will be measured.</param>
     /// <returns>Returns a delta time that shows how long has already worked today.</returns>
-    public static TimeSpan GetDeltaTime(IWorkDayInfo workDay, DateTime currentTime)
+    public static TimeSpan GetDeltaTime(DateTime startTime, TimeSpan dailyWorkLength, TimeSpan totalBreakLength, DateTime currentTime)
     {
-      if (workDay == null)
-      {
-        throw new ArgumentNullException(nameof(workDay));
-      }
-
-      var targetTime = GetTargetTime(workDay);
+      var targetTime = GetTargetTime(startTime, dailyWorkLength, totalBreakLength);
       var deltaTime = (targetTime - currentTime).Duration();
 
       if (targetTime > currentTime)
@@ -41,19 +36,16 @@ namespace TimeTool.BusinessLogic
     }
 
     /// <summary>
-    /// Calculates the time when the <paramref name="workDay"/> work will be over.
+    /// Calculates the time when the work day work will be over.
     /// </summary>
-    /// <param name="workDay">Contains the time information of a single work day.</param>
+    /// <param name="startTime">Contains date and time of the point in time when work started.</param>
+    /// <param name="dailyWorkLength">Contains the pure length of the work day.</param>
+    /// <param name="totalBreakLength">Contains the total sum of breaks during the work day.</param>
     /// <returns>Returns the time time when the expected work length is finished.</returns>
-    public static DateTime GetTargetTime(IWorkDayInfo workDay)
+    public static DateTime GetTargetTime(DateTime startTime, TimeSpan dailyWorkLength, TimeSpan totalBreakLength)
     {
-      if (workDay == null)
-      {
-        throw new ArgumentNullException(nameof(workDay));
-      }
-
-      var targetTime = workDay.StartTime.Add(workDay.DailyWorkLength)
-                              .Add(workDay.TotalBreakLength);
+      var targetTime = startTime.Add(dailyWorkLength)
+                                .Add(totalBreakLength);
 
       return targetTime;
     }
