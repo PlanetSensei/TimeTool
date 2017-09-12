@@ -10,19 +10,17 @@ namespace TimeTool.DataAccess
   using System.Collections.Generic;
   using System.Linq;
 
-  using LiteDB;
-
   using TimeTool.Contracts;
 
   /// <summary>
   /// Provides access to work day information in the database.
   /// </summary>
-  public class WorkDayAccess
+  public class WorkDayAccess : IWorkDayAccess, IDisposable
   {
     /// <summary>
-    /// Contains the fully qualified location and name of the database file.
+    /// The database instance that is managed by this class.
     /// </summary>
-    private readonly string databaseLocation;
+    private readonly WorkDayRepository repository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WorkDayAccess"/> class.
@@ -30,43 +28,54 @@ namespace TimeTool.DataAccess
     /// <param name="databaseLocation">Contains the fully qualified location and name of the database file.</param>
     public WorkDayAccess(string databaseLocation)
     {
-      if (databaseLocation == null)
+      if (string.IsNullOrWhiteSpace(databaseLocation))
       {
-        throw new ArgumentNullException(nameof(databaseLocation));
+        throw new ArgumentException(nameof(databaseLocation));
       }
 
-      this.databaseLocation = databaseLocation;
+      this.repository = new WorkDayRepository(databaseLocation);
     }
 
+    /// <inheritdoc />
     public IEnumerable<IWorkDayInfo> CreateMonth(int year, int month, TimeSpan dailyLength, TimeSpan breakLength)
     {
-      using (var database = new LiteDatabase(this.databaseLocation))
+      var workDays = this.repository.GetDays();
+
+      // Create empty entries for current month
+      var daysInMonth = DateTime.DaysInMonth(year, month);
+      var availableDays = new WorkDay[daysInMonth];
+
+      for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++)
       {
-        var workDays = database.GetCollection<WorkDay>("WorkDay");
+        var currentDay = new DateTime(year, month, dayOfMonth);
+        var workDay = workDays.Single(d => d.Date == currentDay.Date);
 
-        // Create empty entries for current month
-        var daysInMonth = DateTime.DaysInMonth(year, month);
-
-        for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++)
+        if (workDay == null)
         {
-          var currentDay = new DateTime(year, month, dayOfMonth);
-          var workDay = workDays.FindOne(d => d.Date == currentDay.Date);
+          workDay = new WorkDay
+                      {
+                        Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayOfMonth),
+                        DailyWorkLength = dailyLength,
+                        TotalBreakLength = breakLength
+                      };
 
-          if (workDay == null)
-          {
-            workDay = new WorkDay
-                        {
-                          Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayOfMonth),
-                          DailyWorkLength = dailyLength,
-                          TotalBreakLength = breakLength
-                        };
-
-            workDays.Insert(workDay);
-          }
-
-          yield return workDay;
+          // Remember that the technical index is 0-based.
+          availableDays[dayOfMonth - 1] = workDay;
         }
       }
+
+      this.repository.Insert(availableDays);
+      return availableDays;
+    }
+
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
+    /// <filterpriority>2</filterpriority>
+    public void Dispose()
+    {
+      this.Dispose(true);
+      GC.SuppressFinalize(this);
     }
 
     /// <summary>
@@ -78,27 +87,24 @@ namespace TimeTool.DataAccess
     /// <returns>Return a collection of found work day objects.</returns>
     public IEnumerable<IWorkDayInfo> GetDays(int year, int month)
     {
-      using (var database = new LiteDatabase(this.databaseLocation))
+      var workDays = this.repository.GetDays();
+
+      var monthstart = new DateTime(year, month, 1);
+      var nextMonth = new DateTime(year, month + 1, 1);
+      var daysInMonth = workDays.Where(day => day.Date >= monthstart && day.Date < nextMonth);
+
+      foreach (var workDay in daysInMonth)
       {
-        var workDays = database.GetCollection<WorkDay>("WorkDay");
-        //database.DropCollection("WorkDay");
+        var info = new WorkDay
+                     {
+                       DailyWorkLength = workDay.DailyWorkLength,
+                       Date = workDay.Date,
+                       StartTime = workDay.StartTime,
+                       TotalBreakLength = workDay.TotalBreakLength,
+                       WorkDayId = workDay.WorkDayId
+                     };
 
-        var monthstart = new DateTime(year, month, 1);
-        var nextMonth = new DateTime(year, month + 1, 1);
-        var daysInMonth = workDays.Find(day => day.Date >= monthstart && day.Date < nextMonth);
-
-        foreach (var workDay in daysInMonth)
-        {
-          var info = new WorkDay
-                       {
-                         DailyWorkLength = workDay.DailyWorkLength,
-                         Date = workDay.Date,
-                         TotalBreakLength = workDay.TotalBreakLength,
-                         WorkDayId = workDay.WorkDayId
-                       };
-
-          yield return info;
-        }
+        yield return info;
       }
     }
 
@@ -108,28 +114,26 @@ namespace TimeTool.DataAccess
     /// <param name="workDay">The current workday instance.</param>
     public void Save(IWorkDayInfo workDay)
     {
-      using (var database = new LiteDatabase(this.databaseLocation))
-      {
-        var workDays = database.GetCollection<WorkDay>("WorkDay");
-        var targetDay = workDays.FindOne(d => d.WorkDayId == workDay.WorkDayId);
-
-        MapValues(workDay, targetDay);
-
-        var updateSuccess = workDays.Update(targetDay);
-      }
+      this.repository.Update(workDay);
     }
 
     /// <summary>
-    /// Assigns the values of the source object to the corresponding properties of the target object.
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
-    /// <param name="source">Contains the values that will be assigned to the target object.</param>
-    /// <param name="target">Receives the values of the source object.</param>
-    private static void MapValues(IWorkDayInfo source, WorkDay target)
+    /// <param name="isDisposing">
+    /// Specifies whether this method is called by an explicit call to Dispose,
+    /// or it is called by the garbage collector.<c> true </c>if this method is called from Dispose,
+    /// otherwise<c> false </c>if called by the destructor of <see cref="WorkDayAccess"/>.
+    /// </param>
+    /// <filterpriority>2</filterpriority>
+    private void Dispose(bool isDisposing)
     {
-      target.StartTime = source.StartTime;
-      target.DailyWorkLength = source.DailyWorkLength;
-      target.Date = source.Date;
-      target.TotalBreakLength = source.TotalBreakLength;
+      if (isDisposing)
+      {
+        this.repository?.Dispose();
+      }
+
+      // release native ressources here, if necessary.
     }
   }
 }

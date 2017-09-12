@@ -61,13 +61,6 @@ namespace TimeTool.TimeToolUi.ViewModels
         this.Today.StartTime = logon;
       }
 
-      //this.Today = new WorkDayViewModel
-      //               {
-      //                 DailyWorkLength = this.appSettings.DailyWorkLength,
-      //                 StartTime = new DateTime(logon.Year, logon.Month, logon.Day, logon.Hour, logon.Minute, logon.Second),
-      //                 TotalBreakLength = this.appSettings.DefaultBreakLength
-      //               };
-
       this.UpdateCommand = new RelayCommand(
                              () =>
                                {
@@ -77,7 +70,6 @@ namespace TimeTool.TimeToolUi.ViewModels
                                    this.Today.TotalBreakLength,
                                    DateTime.Now);
                                });
-
     }
 
     /// <summary>
@@ -133,8 +125,10 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public void Save()
     {
-      var access = new WorkDayAccess(this.appSettings.DatabaseLocation);
-      access.Save(this.Today);
+      using (var access = new WorkDayAccess(this.appSettings.DatabaseLocation))
+      {
+        access.Save(this.Today);
+      }
     }
 
     /// <summary>
@@ -144,32 +138,35 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <param name="month">The month for which the work day information are collected.</param>
     private void GetAllDays(int year, int month)
     {
-      var access = new WorkDayAccess(this.appSettings.DatabaseLocation);
-      var workDayInfos = access.GetDays(year, month).ToArray();
-
-      if (workDayInfos.Length == 0)
+      using (var access = new WorkDayAccess(this.appSettings.DatabaseLocation))
       {
-        workDayInfos = access.CreateMonth(
-                               year,
-                               month,
-                               this.appSettings.DailyWorkLength,
-                               this.appSettings.DefaultBreakLength)
-                             .ToArray();
-      }
+        var workDayInfos = access.GetDays(year, month)
+                                 .ToArray();
 
-      this.AllDaysInMonth.Clear();
-      foreach (var info in workDayInfos)
-      {
-        var viewModel = new WorkDayViewModel
-                          {
-                            DailyWorkLength = info.DailyWorkLength,
-                            StartTime = info.StartTime,
-                            Date = info.Date,
-                            TotalBreakLength = info.TotalBreakLength,
-                            WorkDayId = info.WorkDayId
-                          };
+        if (workDayInfos.Length == 0)
+        {
+          workDayInfos = access.CreateMonth(
+                                 year,
+                                 month,
+                                 this.appSettings.DailyWorkLength,
+                                 this.appSettings.DefaultBreakLength)
+                               .ToArray();
+        }
 
-        this.AllDaysInMonth.Add(viewModel);
+        this.AllDaysInMonth.Clear();
+        foreach (var info in workDayInfos)
+        {
+          var viewModel = new WorkDayViewModel
+                            {
+                              DailyWorkLength = info.DailyWorkLength,
+                              StartTime = info.StartTime,
+                              Date = info.Date,
+                              TotalBreakLength = info.TotalBreakLength,
+                              WorkDayId = info.WorkDayId
+                            };
+
+          this.AllDaysInMonth.Add(viewModel);
+        }
       }
     }
   }
