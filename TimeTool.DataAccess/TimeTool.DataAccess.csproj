@@ -55,6 +55,9 @@
     <Compile Include="WorkDayRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\TimeInfo.TimeInfoUi\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

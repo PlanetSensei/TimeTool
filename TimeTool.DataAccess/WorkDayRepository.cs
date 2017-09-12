@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="WorkDayAccess.cs" company="Jens Hellmann">
+// <copyright file="WorkDayRepository.cs" company="Jens Hellmann">
 //   Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -101,6 +101,19 @@ namespace TimeTool.DataAccess
     }
 
     /// <summary>
+    /// Assigns the values of the source object to the corresponding properties of the target object.
+    /// </summary>
+    /// <param name="source">Contains the values that will be assigned to the target object.</param>
+    /// <param name="target">Receives the values of the source object.</param>
+    private static void MapValues(IWorkDayInfo source, WorkDay target)
+    {
+      target.StartTime = source.StartTime;
+      target.DailyWorkLength = source.DailyWorkLength;
+      target.Date = source.Date;
+      target.TotalBreakLength = source.TotalBreakLength;
+    }
+
+    /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     /// <param name="isDisposing">
@@ -117,19 +130,6 @@ namespace TimeTool.DataAccess
       }
 
       // release native ressources here, if necessary.
-    }
-
-    /// <summary>
-    /// Assigns the values of the source object to the corresponding properties of the target object.
-    /// </summary>
-    /// <param name="source">Contains the values that will be assigned to the target object.</param>
-    /// <param name="target">Receives the values of the source object.</param>
-    private static void MapValues(IWorkDayInfo source, WorkDay target)
-    {
-      target.StartTime = source.StartTime;
-      target.DailyWorkLength = source.DailyWorkLength;
-      target.Date = source.Date;
-      target.TotalBreakLength = source.TotalBreakLength;
     }
   }
 }

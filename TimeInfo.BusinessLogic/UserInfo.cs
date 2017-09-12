@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="UserInfo.cs" company="Jens Hellmann">
-//   Copyright (c) Jens Hellmann. All rights reserved.
+// Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 

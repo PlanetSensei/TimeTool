@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="WorkDayAccess.cs" company="Jens Hellmann">
-//   Copyright (c) Jens Hellmann. All rights reserved.
+// <copyright file="IWorkDayAccess.cs" company="Jens Hellmann">
+// Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
