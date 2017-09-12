@@ -14,11 +14,6 @@ namespace TimeTool.Contracts
   public interface IWorkdayInfo
   {
     /// <summary>
-    /// Gets or sets the date part of the work day.
-    /// </summary>
-    DateTime Date { get; set; }
-
-    /// <summary>
     /// Gets or sets the expected length of work on this day.
     /// </summary>
     TimeSpan DailyWorkLength { get; set; }

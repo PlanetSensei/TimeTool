@@ -13,10 +13,10 @@ namespace TimeTool.Contracts
   /// </summary>
   public class Workday : IWorkdayInfo
   {
-    /// <summary>
-    /// Gets or sets the current date of this day.
-    /// </summary>
-    public DateTime Date { get; set; }
+    ///// <summary>
+    ///// Gets or sets the current date of this day.
+    ///// </summary>
+    //public DateTime Date { get; set; }
 
     /// <summary>
     /// Gets or sets the expected length of the current work day.

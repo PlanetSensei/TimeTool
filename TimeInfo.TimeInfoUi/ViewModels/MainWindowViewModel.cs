@@ -53,7 +53,7 @@ namespace TimeTool.TimeToolUi.ViewModels
       this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
 
       var todayDate = DateTime.Now.Date;
-      this.Today = this.AllDaysInMonth.Single(day => day.Date == todayDate);
+      this.Today = this.AllDaysInMonth.Single(day => day.StartTime.Date == todayDate);
 
       if (this.Today.StartTime.Equals(DateTime.MinValue))
       {
@@ -160,7 +160,7 @@ namespace TimeTool.TimeToolUi.ViewModels
                             {
                               DailyWorkLength = info.DailyWorkLength,
                               StartTime = info.StartTime,
-                              Date = info.Date,
+                              //Date = info.Date,
                               TotalBreakLength = info.TotalBreakLength,
                               WorkdayId = info.WorkdayId
                             };

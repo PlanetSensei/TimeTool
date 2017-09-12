@@ -48,13 +48,13 @@ namespace TimeTool.DataAccess
       for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++)
       {
         var currentDay = new DateTime(year, month, dayOfMonth);
-        var workday = workdays.Single(d => d.Date == currentDay.Date);
+        var workday = workdays.Single(d => d.StartTime == currentDay.Date);
 
         if (workday == null)
         {
           workday = new Workday
                       {
-                        Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dayOfMonth),
+                        StartTime = currentDay,
                         DailyWorkLength = dailyLength,
                         TotalBreakLength = breakLength
                       };
@@ -91,14 +91,13 @@ namespace TimeTool.DataAccess
 
       var monthstart = new DateTime(year, month, 1);
       var nextMonth = new DateTime(year, month + 1, 1);
-      var daysInMonth = workdays.Where(day => day.Date >= monthstart && day.Date < nextMonth);
+      var daysInMonth = workdays.Where(day => day.StartTime >= monthstart && day.StartTime < nextMonth);
 
       foreach (var workday in daysInMonth)
       {
         var info = new Workday
                      {
                        DailyWorkLength = workday.DailyWorkLength,
-                       Date = workday.Date,
                        StartTime = workday.StartTime,
                        TotalBreakLength = workday.TotalBreakLength,
                        WorkdayId = workday.WorkdayId

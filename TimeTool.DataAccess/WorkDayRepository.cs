@@ -109,7 +109,6 @@ namespace TimeTool.DataAccess
     {
       target.StartTime = source.StartTime;
       target.DailyWorkLength = source.DailyWorkLength;
-      target.Date = source.Date;
       target.TotalBreakLength = source.TotalBreakLength;
     }
 
