@@ -16,7 +16,7 @@ namespace TimeTool.TimeToolUi.ViewModels
   /// <summary>
   /// Represents a single day's work time information.
   /// </summary>
-  public class WorkDayViewModel : ViewModelBase, IWorkDayInfo
+  public class WorkdayViewModel : ViewModelBase, IWorkdayInfo
   {
     /// <summary>
     /// Gets or sets the expected length of work on this day.
@@ -155,7 +155,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Gets or sets the unique identifier of the current work day.
     /// </summary>
-    public int WorkDayId { get; set; }
+    public int WorkdayId { get; set; }
 
     /// <summary>
     /// Processes the current values to update the displayed values.

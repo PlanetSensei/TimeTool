@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="WorkDayRepository.cs" company="Jens Hellmann">
-//   Copyright (c) Jens Hellmann. All rights reserved.
+// Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -17,12 +17,12 @@ namespace TimeTool.DataAccess
   /// <summary>
   /// Provides access to the actual databaseand abstracts it from the rest of the code.
   /// </summary>
-  internal class WorkDayRepository : IDisposable
+  internal class WorkdayRepository : IDisposable
   {
     /// <summary>
     /// The name of the work days collection in the database.
     /// </summary>
-    private const string CollectionName = "WorkDay";
+    private const string CollectionName = "Workday";
 
     /// <summary>
     /// The database instance that is managed by this class.
@@ -30,7 +30,7 @@ namespace TimeTool.DataAccess
     private readonly LiteDatabase database;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WorkDayRepository"/> class.
+    /// Initializes a new instance of the <see cref="WorkdayRepository"/> class.
     /// </summary>
     /// <param name="databaseLocation">Contains the fully qualified location and name of the database file.</param>
     /// <exception cref="ArgumentException">The specified <paramref name="databaseLocation"/> value was one of the following values:
@@ -40,20 +40,20 @@ namespace TimeTool.DataAccess
     ///     <item>Consists of only whitespaces</item>
     ///   </list>
     /// </exception>
-    internal WorkDayRepository(string databaseLocation)
+    internal WorkdayRepository(string databaseLocation)
     {
       if (string.IsNullOrWhiteSpace(databaseLocation))
       {
-        throw new ArgumentException(nameof(databaseLocation));
+        throw new ArgumentException("Argument must not be NULL, empty, or consist of only whitespaces.", nameof(databaseLocation));
       }
 
       this.database = new LiteDatabase(databaseLocation);
     }
 
     /// <summary>
-    /// Gets a collection of all available <see cref="IWorkDayInfo"/> instances.
+    /// Gets a collection of all available <see cref="IWorkdayInfo"/> instances.
     /// </summary>
-    private LiteCollection<WorkDay> Days => this.database.GetCollection<WorkDay>(CollectionName);
+    private LiteCollection<Workday> Days => this.database.GetCollection<Workday>(CollectionName);
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -69,20 +69,20 @@ namespace TimeTool.DataAccess
     /// Returns all days of the underlying collection.
     /// </summary>
     /// <returns>Returns all avalaible day objects.</returns>
-    internal WorkDay[] GetDays()
+    internal Workday[] GetDays()
     {
       // TODO: Refine this for just a single month/ year.
-      var workDays = this.Days;
+      var workdays = this.Days;
 
-      return workDays.FindAll()
+      return workdays.FindAll()
                      .ToArray();
     }
 
     /// <summary>
-    /// Adds a new <see cref="IWorkDayInfo"/> object into the database.
+    /// Adds a new <see cref="IWorkdayInfo"/> object into the database.
     /// </summary>
     /// <param name="day">The object that will be saved.</param>
-    internal void Insert(IEnumerable<WorkDay> day)
+    internal void Insert(IEnumerable<Workday> day)
     {
       this.Days.InsertBulk(day);
     }
@@ -91,9 +91,9 @@ namespace TimeTool.DataAccess
     /// Saves the values of the specified work day instance.
     /// </summary>
     /// <param name="day">The current workday instance.</param>
-    internal void Update(IWorkDayInfo day)
+    internal void Update(IWorkdayInfo day)
     {
-      var targetDay = this.Days.FindOne(d => d.WorkDayId == day.WorkDayId);
+      var targetDay = this.Days.FindOne(d => d.WorkdayId == day.WorkdayId);
 
       MapValues(day, targetDay);
 
@@ -105,7 +105,7 @@ namespace TimeTool.DataAccess
     /// </summary>
     /// <param name="source">Contains the values that will be assigned to the target object.</param>
     /// <param name="target">Receives the values of the source object.</param>
-    private static void MapValues(IWorkDayInfo source, WorkDay target)
+    private static void MapValues(IWorkdayInfo source, Workday target)
     {
       target.StartTime = source.StartTime;
       target.DailyWorkLength = source.DailyWorkLength;
@@ -119,14 +119,17 @@ namespace TimeTool.DataAccess
     /// <param name="isDisposing">
     /// Specifies whether this method is called by an explicit call to Dispose,
     /// or it is called by the garbage collector.<c> true </c>if this method is called from Dispose,
-    /// otherwise<c> false </c>if called by the destructor of <see cref="WorkDayAccess"/>.
+    /// otherwise<c> false </c>if called by the destructor of <see cref="WorkdayAccess"/>.
     /// </param>
     /// <filterpriority>2</filterpriority>
     private void Dispose(bool isDisposing)
     {
       if (isDisposing)
       {
-        this.database?.Dispose();
+        if (this.database != null)
+        {
+          this.database.Dispose();
+        }
       }
 
       // release native ressources here, if necessary.

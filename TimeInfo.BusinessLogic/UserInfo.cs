@@ -18,7 +18,7 @@ namespace TimeTool.BusinessLogic
     /// Default value is <see cref="DateTime.Now"/> if the actual value could not be determined.
     /// </summary>
     /// <returns>Returns latest logon time in LOCAL time.</returns>
-    public static DateTime GetLastLoginToMachine()
+    public static DateTime GetLastLogOnToMachine()
     {
       var logOn = EventLogReader.GetLogOn();
       return logOn;

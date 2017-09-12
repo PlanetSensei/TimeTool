@@ -32,12 +32,12 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Gets or sets the collection that contains all work days in the current month.
     /// </summary>
-    private ObservableCollection<WorkDayViewModel> allDaysInMonth;
+    private ObservableCollection<WorkdayViewModel> allDaysInMonth;
 
     /// <summary>
-    /// Gets or sets the <see cref="WorkDayViewModel"/> instance that represents the current day.
+    /// Gets or sets the <see cref="WorkdayViewModel"/> instance that represents the current day.
     /// </summary>
-    private WorkDayViewModel today;
+    private WorkdayViewModel today;
 
     /// <summary>
     /// Gets or sets the command object that updates the UI.
@@ -49,7 +49,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public MainWindowViewModel()
     {
-      this.AllDaysInMonth = new ObservableCollection<WorkDayViewModel>();
+      this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
       this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
 
       var todayDate = DateTime.Now.Date;
@@ -57,7 +57,7 @@ namespace TimeTool.TimeToolUi.ViewModels
 
       if (this.Today.StartTime.Equals(DateTime.MinValue))
       {
-        var logon = UserInfo.GetLastLoginToMachine();
+        var logon = UserInfo.GetLastLogOnToMachine();
         this.Today.StartTime = logon;
       }
 
@@ -73,16 +73,16 @@ namespace TimeTool.TimeToolUi.ViewModels
     }
 
     /// <summary>
-    /// Gets or sets the collection that contains all work days in the current month.
+    /// Gets the collection that contains all work days in the current month.
     /// </summary>
-    public ObservableCollection<WorkDayViewModel> AllDaysInMonth
+    public ObservableCollection<WorkdayViewModel> AllDaysInMonth
     {
       get
       {
         return this.allDaysInMonth;
       }
 
-      set
+      private set
       {
         this.Set(ref this.allDaysInMonth, value);
       }
@@ -107,7 +107,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Gets or sets the time when the user started work on this day.
     /// </summary>
-    public WorkDayViewModel Today
+    public WorkdayViewModel Today
     {
       get
       {
@@ -125,7 +125,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public void Save()
     {
-      using (var access = new WorkDayAccess(this.appSettings.DatabaseLocation))
+      using (var access = new WorkdayAccess(this.appSettings.DatabaseLocation))
       {
         access.Save(this.Today);
       }
@@ -138,14 +138,14 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <param name="month">The month for which the work day information are collected.</param>
     private void GetAllDays(int year, int month)
     {
-      using (var access = new WorkDayAccess(this.appSettings.DatabaseLocation))
+      using (var access = new WorkdayAccess(this.appSettings.DatabaseLocation))
       {
-        var workDayInfos = access.GetDays(year, month)
+        var workdayInfos = access.GetDays(year, month)
                                  .ToArray();
 
-        if (workDayInfos.Length == 0)
+        if (workdayInfos.Length == 0)
         {
-          workDayInfos = access.CreateMonth(
+          workdayInfos = access.CreateMonth(
                                  year,
                                  month,
                                  this.appSettings.DailyWorkLength,
@@ -154,15 +154,15 @@ namespace TimeTool.TimeToolUi.ViewModels
         }
 
         this.AllDaysInMonth.Clear();
-        foreach (var info in workDayInfos)
+        foreach (var info in workdayInfos)
         {
-          var viewModel = new WorkDayViewModel
+          var viewModel = new WorkdayViewModel
                             {
                               DailyWorkLength = info.DailyWorkLength,
                               StartTime = info.StartTime,
                               Date = info.Date,
                               TotalBreakLength = info.TotalBreakLength,
-                              WorkDayId = info.WorkDayId
+                              WorkdayId = info.WorkdayId
                             };
 
           this.AllDaysInMonth.Add(viewModel);

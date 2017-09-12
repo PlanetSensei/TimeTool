@@ -27,11 +27,11 @@
         </Style>
       </infrastructure:OvertimeStyleConverter.Overtime>
 
-      <infrastructure:OvertimeStyleConverter.Undertime>
+      <infrastructure:OvertimeStyleConverter.UnderTime>
         <Style TargetType="xctk:TimeSpanUpDown">
           <Setter Property="Background" Value="LightCoral" />
         </Style>
-      </infrastructure:OvertimeStyleConverter.Undertime>
+      </infrastructure:OvertimeStyleConverter.UnderTime>
 
     </infrastructure:OvertimeStyleConverter>
   </Window.Resources>

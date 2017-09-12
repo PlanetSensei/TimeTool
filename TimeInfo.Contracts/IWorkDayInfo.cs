@@ -11,7 +11,7 @@ namespace TimeTool.Contracts
   /// <summary>
   /// Provides a public interface for an object that represents a single work day time info.
   /// </summary>
-  public interface IWorkDayInfo
+  public interface IWorkdayInfo
   {
     /// <summary>
     /// Gets or sets the date part of the work day.
@@ -36,6 +36,6 @@ namespace TimeTool.Contracts
     /// <summary>
     /// Gets or sets the unique identifier of the current work day.
     /// </summary>
-    int WorkDayId { get; set; }
+    int WorkdayId { get; set; }
   }
 }

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="WorkDay.cs" company="Jens Hellmann">
-//   Copyright (c) Jens Hellmann. All rights reserved.
+// Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ namespace TimeTool.Contracts
   /// <summary>
   /// Represents a single work day without the calculated time values.
   /// </summary>
-  public class WorkDay : IWorkDayInfo
+  public class Workday : IWorkdayInfo
   {
     /// <summary>
     /// Gets or sets the current date of this day.
@@ -36,6 +36,6 @@ namespace TimeTool.Contracts
     /// <summary>
     /// Gets or sets the unique identifier of the current work day.
     /// </summary>
-    public int WorkDayId { get; set; }
+    public int WorkdayId { get; set; }
   }
 }

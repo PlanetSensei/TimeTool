@@ -24,7 +24,7 @@ namespace TimeTool.TimeToolUi.Infrastructure
     /// <summary>
     /// Gets or sets the control <see cref="Style"/> for undertime work.
     /// </summary>
-    public Style Undertime { get; set; }
+    public Style UnderTime { get; set; }
 
     /// <summary>Converts a value. </summary>
     /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
@@ -37,13 +37,13 @@ namespace TimeTool.TimeToolUi.Infrastructure
       // Check this before the following cast to avoid an exception. :-)
       if (value == null)
       {
-        return this.Undertime;
+        return this.UnderTime;
       }
 
       var remaining = (TimeSpan)value;
       if (remaining < new TimeSpan(0))
       {
-        return this.Undertime;
+        return this.UnderTime;
       }
 
       return this.Overtime;

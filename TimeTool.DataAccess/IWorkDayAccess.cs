@@ -14,7 +14,7 @@ namespace TimeTool.DataAccess
   /// <summary>
   /// Provides an interface to manage work day information.
   /// </summary>
-  public interface IWorkDayAccess
+  public interface IWorkdayAccess
   {
     /// <summary>
     /// Creates a collection of work day objects that represent a
@@ -25,7 +25,7 @@ namespace TimeTool.DataAccess
     /// <param name="dailyLength">The default work length per day that will be set for each day during creation.</param>
     /// <param name="breakLength">The default break length per day length that will be set for each day during creation.</param>
     /// <returns>Returns a collection of the created work day objects.</returns>
-    IEnumerable<IWorkDayInfo> CreateMonth(int year, int month, TimeSpan dailyLength, TimeSpan breakLength);
+    IEnumerable<IWorkdayInfo> CreateMonth(int year, int month, TimeSpan dailyLength, TimeSpan breakLength);
 
     /// <summary>
     /// Fetches a collection of all entries of the specified month.
@@ -34,12 +34,12 @@ namespace TimeTool.DataAccess
     /// <param name="month">The number of the month from 1 to 12.
     /// Uses the same index as the <see cref="DateTime"/> type.</param>
     /// <returns>Return a collection of found work day objects.</returns>
-    IEnumerable<IWorkDayInfo> GetDays(int year, int month);
+    IEnumerable<IWorkdayInfo> GetDays(int year, int month);
 
     /// <summary>
     /// Saves the values of the specified work day instance.
     /// </summary>
-    /// <param name="workDay">The current workday instance.</param>
-    void Save(IWorkDayInfo workDay);
+    /// <param name="day">The current workday instance.</param>
+    void Save(IWorkdayInfo day);
   }
 }

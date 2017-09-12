@@ -90,20 +90,22 @@ namespace TimeTool.BusinessLogic
     {
       var todayMidnight = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-      EventLog eventLog = new EventLog(logName);
-      IList<EventLogEntry> entries = new List<EventLogEntry>();
-
-      for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > todayMidnight; i--)
+      using (EventLog eventLog = new EventLog(logName))
       {
-        var entry = eventLog.Entries[i];
+        IList<EventLogEntry> entries = new List<EventLogEntry>();
 
-        if (entry.InstanceId == eventId)
+        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > todayMidnight; i--)
         {
-          entries.Add(eventLog.Entries[i]);
-        }
-      }
+          var entry = eventLog.Entries[i];
 
-      return entries;
+          if (entry.InstanceId == eventId)
+          {
+            entries.Add(eventLog.Entries[i]);
+          }
+        }
+
+        return entries;
+      }
     }
   }
 }

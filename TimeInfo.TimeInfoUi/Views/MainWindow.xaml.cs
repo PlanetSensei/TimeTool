@@ -27,14 +27,6 @@ namespace TimeTool.TimeToolUi.Views
       this.InitializeComponent();
     }
 
-    private void TimePicker_TextChanged(object sender, TextChangedEventArgs e)
-    {
-      var picker = (TimePicker)sender;
-      
-      var viewModel = (MainWindowViewModel)this.DataContext;
-      viewModel.Today.StartTime = (DateTime)picker.Value;
-    }
-
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
       var viewModel = (MainWindowViewModel)this.DataContext;
