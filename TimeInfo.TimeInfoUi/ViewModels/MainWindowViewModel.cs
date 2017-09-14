@@ -14,6 +14,7 @@ namespace TimeTool.TimeToolUi.ViewModels
   using GalaSoft.MvvmLight.CommandWpf;
 
   using TimeTool.BusinessLogic;
+  using TimeTool.Contracts;
   using TimeTool.DataAccess;
   using TimeTool.TimeToolUi.Properties;
 
@@ -132,6 +133,30 @@ namespace TimeTool.TimeToolUi.ViewModels
     }
 
     /// <summary>
+    /// Assign the available work day objects to the colelction that is bound to the UI.
+    /// </summary>
+    /// <param name="workdayInfos">The available work day objects.</param>
+    private void AssignToUi(IWorkdayInfo[] workdayInfos)
+    {
+      // I prefer clearing the collection because every now and then something goes wrong
+      // if the observalble collection is newly instanciated and then bound again to the UI.
+      this.AllDaysInMonth.Clear();
+
+      foreach (var info in workdayInfos)
+      {
+        var viewModel = new WorkdayViewModel
+                          {
+                            DailyWorkLength = info.DailyWorkLength,
+                            StartTime = info.StartTime,
+                            TotalBreakLength = info.TotalBreakLength,
+                            WorkdayId = info.WorkdayId
+                          };
+
+        this.AllDaysInMonth.Add(viewModel);
+      }
+    }
+
+    /// <summary>
     /// Loads all available days of the month into memory.
     /// </summary>
     /// <param name="year">The year for which the work day information are collected.</param>
@@ -140,34 +165,40 @@ namespace TimeTool.TimeToolUi.ViewModels
     {
       using (var access = new WorkdayAccess(this.appSettings.DatabaseLocation))
       {
-        var workdayInfos = access.GetDays(year, month)
-                                 .ToArray();
+        var workdayInfos = this.GetOrCreate(year, month, access);
 
-        if (workdayInfos.Length == 0)
-        {
-          workdayInfos = access.CreateMonth(
-                                 year,
-                                 month,
-                                 this.appSettings.DailyWorkLength,
-                                 this.appSettings.DefaultBreakLength)
-                               .ToArray();
-        }
-
-        this.AllDaysInMonth.Clear();
-        foreach (var info in workdayInfos)
-        {
-          var viewModel = new WorkdayViewModel
-                            {
-                              DailyWorkLength = info.DailyWorkLength,
-                              StartTime = info.StartTime,
-                              //Date = info.Date,
-                              TotalBreakLength = info.TotalBreakLength,
-                              WorkdayId = info.WorkdayId
-                            };
-
-          this.AllDaysInMonth.Add(viewModel);
-        }
+        this.AssignToUi(workdayInfos);
       }
+    }
+
+    /// <summary>
+    /// Fetches already existing work day objects from the data source or creates them as needed.
+    /// </summary>
+    /// <param name="year">The current year for which the data is retreved.</param>
+    /// <param name="month">The current month for which the data is retreved.</param>
+    /// <param name="access">The data source collection.</param>
+    /// <returns>Returns all available work day objects for the specified
+    /// <paramref name="year"/> and <paramref name="month"/>.</returns>
+    private IWorkdayInfo[] GetOrCreate(int year, int month, WorkdayAccess access)
+    {
+      // TODO: This method might be better suited for a dedicated data access class.
+      // TODO: Move into another class.
+      var workdayInfos = access.GetDays(year, month)
+                               .ToArray();
+
+      var expectedNumberOfDays = DateTime.DaysInMonth(year, month);
+
+      if (workdayInfos.Length != expectedNumberOfDays)
+      {
+        workdayInfos = access.CreateMonth(
+                               year,
+                               month,
+                               this.appSettings.DailyWorkLength,
+                               this.appSettings.DefaultBreakLength)
+                             .ToArray();
+      }
+
+      return workdayInfos;
     }
   }
 }

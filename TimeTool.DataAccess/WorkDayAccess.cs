@@ -48,7 +48,7 @@ namespace TimeTool.DataAccess
       for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++)
       {
         var currentDay = new DateTime(year, month, dayOfMonth);
-        var workday = workdays.Single(d => d.StartTime == currentDay.Date);
+        var workday = workdays.SingleOrDefault(d => d.StartTime.Date == currentDay.Date);
 
         if (workday == null)
         {
