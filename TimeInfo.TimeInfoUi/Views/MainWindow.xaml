@@ -14,6 +14,8 @@
         Icon="/TimeTool.TimeToolUi;component/AppIcon_Clock.ico"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
 
+  <!-- TODO: Extract the various UI parts into dedicated UserControls -->
+  
   <!-- Initialize the ViewModel -->
   <Window.DataContext>
     <viewModels:MainWindowViewModel />
@@ -98,7 +100,7 @@
         <xctk:TimeSpanUpDown Grid.Column="1"
                              Grid.Row="2"
                              ShowButtonSpinner="False"
-                             Value="{Binding Path=Today.DailyWorkLength, UpdateSourceTrigger=PropertyChanged}" />
+                             Value="{Binding Path=Today.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
 
       </Grid>
 
@@ -217,10 +219,10 @@
             </xGrid:Column.DisplayMemberBindingInfo>
           </xGrid:Column>
 
-          <xGrid:Column FieldName="DailyWorkLength"
+          <xGrid:Column FieldName="DefaultWorkLength"
                         Title="Daily Work Length">
             <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="DailyWorkLength">
+              <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
               </xGrid:DataGridBindingInfo>
             </xGrid:Column.DisplayMemberBindingInfo>
           </xGrid:Column>

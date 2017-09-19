@@ -21,7 +21,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Gets or sets the expected length of work on this day.
     /// </summary>
-    private TimeSpan defaultDailyWorkLenth;
+    private TimeSpan defaulWorkLenth;
 
     /// <summary>
     /// Gets or sets the calculated difference time that shows the user whether he worked overtime or undertime.
@@ -51,16 +51,16 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Gets or sets the expected length of work on this day.
     /// </summary>
-    public TimeSpan DailyWorkLength
+    public TimeSpan DefaultWorkLength
     {
       get
       {
-        return this.defaultDailyWorkLenth;
+        return this.defaulWorkLenth;
       }
 
       set
       {
-        this.Set(ref this.defaultDailyWorkLenth, value);
+        this.Set(ref this.defaulWorkLenth, value);
         this.UpdateTimeValues();
       }
     }
@@ -141,8 +141,8 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     private void UpdateTimeValues()
     {
-      this.RemainingTime = Calculator.GetDeltaTime(this.StartTime, this.DailyWorkLength, this.TotalBreakLength, DateTime.Now);
-      this.TargetTime = Calculator.GetTargetTime(this.StartTime, this.DailyWorkLength, this.TotalBreakLength);
+      this.RemainingTime = Calculator.GetDeltaTime(this.StartTime, this.DefaultWorkLength, this.TotalBreakLength, DateTime.Now);
+      this.TargetTime = Calculator.GetTargetTime(this.StartTime, this.DefaultWorkLength, this.TotalBreakLength);
     }
   }
 }

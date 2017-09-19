@@ -39,6 +39,7 @@ namespace TimeTool.DataAccess
     /// <inheritdoc />
     public IEnumerable<IWorkdayInfo> CreateMonth(int year, int month, TimeSpan dailyLength, TimeSpan breakLength)
     {
+      // TODO: Refine to NOT return ALL days in the database
       var workdays = this.repository.GetDays();
 
       // Create empty entries for current month
@@ -55,7 +56,7 @@ namespace TimeTool.DataAccess
           workday = new Workday
                       {
                         StartTime = currentDay,
-                        DailyWorkLength = dailyLength,
+                        DefaultWorkLength = dailyLength,
                         TotalBreakLength = breakLength
                       };
 
@@ -97,7 +98,7 @@ namespace TimeTool.DataAccess
       {
         var info = new Workday
                      {
-                       DailyWorkLength = workday.DailyWorkLength,
+                       DefaultWorkLength = workday.DefaultWorkLength,
                        StartTime = workday.StartTime,
                        TotalBreakLength = workday.TotalBreakLength,
                        WorkdayId = workday.WorkdayId

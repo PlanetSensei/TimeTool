@@ -55,6 +55,7 @@ namespace TimeTool.DataAccess
     /// </summary>
     private LiteCollection<Workday> Days => this.database.GetCollection<Workday>(CollectionName);
 
+    /// <inheritdoc />
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
@@ -108,7 +109,7 @@ namespace TimeTool.DataAccess
     private static void MapValues(IWorkdayInfo source, Workday target)
     {
       target.StartTime = source.StartTime;
-      target.DailyWorkLength = source.DailyWorkLength;
+      target.DefaultWorkLength = source.DefaultWorkLength;
       target.TotalBreakLength = source.TotalBreakLength;
     }
 

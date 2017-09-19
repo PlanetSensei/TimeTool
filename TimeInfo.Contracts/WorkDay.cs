@@ -16,7 +16,7 @@ namespace TimeTool.Contracts
     /// <summary>
     /// Gets or sets the expected length of the current work day.
     /// </summary>
-    public TimeSpan DailyWorkLength { get; set; }
+    public TimeSpan DefaultWorkLength { get; set; }
 
     /// <summary>
     /// Gets or sets the time when the user started work on this day.

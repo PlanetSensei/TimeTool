@@ -26,9 +26,9 @@ namespace TimeTool.TimeToolUi.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("07:42:00")]
-        public global::System.TimeSpan DailyWorkLength {
+        public global::System.TimeSpan DefaultWorkLength {
             get {
-                return ((global::System.TimeSpan)(this["DailyWorkLength"]));
+                return ((global::System.TimeSpan)(this["DefaultWorkLength"]));
             }
         }
         

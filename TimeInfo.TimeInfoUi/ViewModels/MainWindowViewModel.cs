@@ -31,6 +31,11 @@ namespace TimeTool.TimeToolUi.ViewModels
     private readonly Settings appSettings = new Settings();
 
     /// <summary>
+    /// Contains the fully qualified path and file name of the database.
+    /// </summary>
+    private readonly string Database;
+
+    /// <summary>
     /// Gets or sets the collection that contains all work days in the current month.
     /// </summary>
     private ObservableCollection<WorkdayViewModel> allDaysInMonth;
@@ -50,6 +55,8 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public MainWindowViewModel()
     {
+      this.Database = FileSystem.GetDatabaseFile();
+
       this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
       this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
 
@@ -67,7 +74,7 @@ namespace TimeTool.TimeToolUi.ViewModels
                                {
                                  this.Today.RemainingTime = Calculator.GetDeltaTime(
                                    this.Today.StartTime,
-                                   this.Today.DailyWorkLength,
+                                   this.Today.DefaultWorkLength,
                                    this.Today.TotalBreakLength,
                                    DateTime.Now);
                                });
@@ -126,7 +133,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public void Save()
     {
-      using (var access = new WorkdayAccess(this.appSettings.DatabaseLocation))
+      using (var access = new WorkdayAccess(this.Database))
       {
         access.Save(this.Today);
       }
@@ -146,7 +153,7 @@ namespace TimeTool.TimeToolUi.ViewModels
       {
         var viewModel = new WorkdayViewModel
                           {
-                            DailyWorkLength = info.DailyWorkLength,
+                            DefaultWorkLength = info.DefaultWorkLength,
                             StartTime = info.StartTime,
                             TotalBreakLength = info.TotalBreakLength,
                             WorkdayId = info.WorkdayId
@@ -163,7 +170,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <param name="month">The month for which the work day information are collected.</param>
     private void GetAllDays(int year, int month)
     {
-      using (var access = new WorkdayAccess(this.appSettings.DatabaseLocation))
+      using (var access = new WorkdayAccess(this.Database))
       {
         var workdayInfos = this.GetOrCreate(year, month, access);
 
@@ -193,7 +200,7 @@ namespace TimeTool.TimeToolUi.ViewModels
         workdayInfos = access.CreateMonth(
                                year,
                                month,
-                               this.appSettings.DailyWorkLength,
+                               this.appSettings.DefaultWorkLength,
                                this.appSettings.DefaultBreakLength)
                              .ToArray();
       }
