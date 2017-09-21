@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeTool.TimeToolUi.ViewModels
+namespace TimeTool.ViewModels
 {
   using System;
   using System.Collections.ObjectModel;
@@ -16,9 +16,7 @@ namespace TimeTool.TimeToolUi.ViewModels
   using TimeTool.BusinessLogic;
   using TimeTool.Contracts;
   using TimeTool.DataAccess;
-  using TimeTool.TimeToolUi.Properties;
-
-  //using TimeTool.TimeToolUi.Properties;
+  using TimeTool.Properties;
 
   /// <summary>
   /// Provides interaction logic for the MainWindow.xaml view.
@@ -33,7 +31,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <summary>
     /// Contains the fully qualified path and file name of the database.
     /// </summary>
-    private readonly string Database;
+    private readonly string database;
 
     /// <summary>
     /// Gets or sets the collection that contains all work days in the current month.
@@ -55,7 +53,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public MainWindowViewModel()
     {
-      this.Database = FileSystem.GetDatabaseFile();
+      this.database = FileSystem.GetDatabaseFile();
 
       this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
       this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
@@ -133,7 +131,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// </summary>
     public void Save()
     {
-      using (var access = new WorkdayAccess(this.Database))
+      using (var access = new WorkdayAccess(this.database))
       {
         access.Save(this.Today);
       }
@@ -170,7 +168,7 @@ namespace TimeTool.TimeToolUi.ViewModels
     /// <param name="month">The month for which the work day information are collected.</param>
     private void GetAllDays(int year, int month)
     {
-      using (var access = new WorkdayAccess(this.Database))
+      using (var access = new WorkdayAccess(this.database))
       {
         var workdayInfos = this.GetOrCreate(year, month, access);
 

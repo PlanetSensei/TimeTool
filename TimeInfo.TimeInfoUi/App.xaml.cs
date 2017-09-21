@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeTool.TimeToolUi
+namespace TimeTool
 {
   using System.Windows;
 

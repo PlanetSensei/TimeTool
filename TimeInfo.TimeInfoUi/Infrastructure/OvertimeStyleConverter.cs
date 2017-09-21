@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeTool.TimeToolUi.Infrastructure
+namespace TimeTool.Infrastructure
 {
   using System;
   using System.Globalization;

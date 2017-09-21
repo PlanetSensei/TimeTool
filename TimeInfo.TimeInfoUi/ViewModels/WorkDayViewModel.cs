@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeTool.TimeToolUi.ViewModels
+namespace TimeTool.ViewModels
 {
   using System;
 

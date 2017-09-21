@@ -4,15 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TimeTool.TimeToolUi.Views
+namespace TimeTool.Views
 {
-  using System;
   using System.Windows;
-  using System.Windows.Controls;
 
-  using TimeTool.TimeToolUi.ViewModels;
-
-  using Xceed.Wpf.Toolkit;
+  using TimeTool.ViewModels;
 
   /// <summary>
   /// Interaction logic for MainWindow.xaml
