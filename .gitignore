@@ -6,3 +6,4 @@ bin
 obj
 /TimeInfo.TimeInfoUi/publish
 TimeTool.sln.DotSettings.user
+/TimeInfo.TimeInfoUi/TimeTool.csproj.user
