@@ -175,7 +175,11 @@
               Padding="5"
               Header="Zeiten">
 
-      <Expander Margin="5">
+      <!-- TODO: Implement user defined setting fow expanded/ collapsed state -->
+      <Expander Margin="5"
+                Padding="0, 0, 0, 10"
+                Header="Auf- oder Zuklappen"
+                IsExpanded="True">
 
         <xGrid:DataGridControl AllowDrag="False"
                              AllowDrop="False"

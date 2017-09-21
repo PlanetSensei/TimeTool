@@ -40,14 +40,5 @@ namespace TimeTool.TimeToolUi.Properties {
                 return ((global::System.TimeSpan)(this["DefaultBreakLength"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Temp\\NoSql\\TimeTool.db")]
-        public string DatabaseLocation {
-            get {
-                return ((string)(this["DatabaseLocation"]));
-            }
-        }
     }
 }
