@@ -66,18 +66,16 @@ namespace TimeTool.BusinessLogic
     /// <summary>
     /// Reads the first WinLogOn event of the current day from the event log.
     /// </summary>
+    /// <param name="day">Defines the specific day from which the data will be looked up.</param>
     /// <returns>Returns the first LoOn timestamp of the local machine in LOCAL time.</returns>
-    internal static DateTime GetLogOn()
+    internal static DateTime GetLogOn(DateTime day)
     {
-      var entries = GetLogOnEntries(EventLogSystem, WinLogIdSystem);
-
-      // The easy solution save for later
-      ////var firstLogon = entries.Count > 0 ? entries.Min(e => e.TimeGenerated) : DateTime.UtcNow;
+      var entries = GetLogOnEntries(EventLogSystem, WinLogIdSystem, day);
 
       if (entries.Count <= 0)
       {
         // Less accurate, but on windows 10 there is no return value from the Securityevent log.
-        entries = GetLogOnEntries(EventLogSecurity, WinLogIdSecurity);
+        entries = GetLogOnEntries(EventLogSecurity, WinLogIdSecurity, day);
       }
 
       var firstLogon = entries.Count > 0 ? entries.Min(e => e.TimeGenerated) : DateTime.UtcNow;
@@ -86,15 +84,21 @@ namespace TimeTool.BusinessLogic
       return localTime;
     }
 
-    private static IList<EventLogEntry> GetLogOnEntries(string logName, long eventId)
+    /// <summary>
+    /// Gets all EventLog entries with the specified <paramref name="eventId"/>.
+    /// </summary>
+    /// <param name="logName">The name of the EventLog from which the entries will be collected.</param>
+    /// <param name="eventId">The ID of the events to look for.</param>
+    /// <param name="day">Defines the start of the time frame within the events will be searched.</param>
+    /// <returns>Returns a collection of found events.</returns>
+    private static IList<EventLogEntry> GetLogOnEntries(string logName, long eventId, DateTime day)
     {
-      var todayMidnight = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
       using (EventLog eventLog = new EventLog(logName))
       {
         IList<EventLogEntry> entries = new List<EventLogEntry>();
 
-        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > todayMidnight; i--)
+        // TODO: Check a time RANGE instead
+        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > day; i--)
         {
           var entry = eventLog.Entries[i];
 

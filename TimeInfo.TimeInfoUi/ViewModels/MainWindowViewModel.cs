@@ -63,7 +63,7 @@ namespace TimeTool.ViewModels
 
       if (this.Today.StartTime.Equals(DateTime.MinValue))
       {
-        var logon = UserInfo.GetLastLogOnToMachine();
+        var logon = UserInfo.GetLastLogOnToMachine(this.Today.StartTime.Date);
         this.Today.StartTime = logon;
       }
 
