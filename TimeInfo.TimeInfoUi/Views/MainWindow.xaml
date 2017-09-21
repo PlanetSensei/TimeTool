@@ -9,13 +9,13 @@
         xmlns:infrastructure="clr-namespace:TimeTool.TimeToolUi.Infrastructure"
         mc:Ignorable="d"
         Title="TimeTool"
-        Height="450"
-        Width="800"
+        SizeToContent="WidthAndHeight"
         Icon="/TimeTool.TimeToolUi;component/AppIcon_Clock.ico"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
 
   <!-- TODO: Extract the various UI parts into dedicated UserControls -->
-  
+
   <!-- Initialize the ViewModel -->
   <Window.DataContext>
     <viewModels:MainWindowViewModel />
@@ -47,8 +47,8 @@
     </Grid.ColumnDefinitions>
 
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="300"/>
+      <RowDefinition />
+      <RowDefinition />
       <!--<RowDefinition Height="Auto"/>-->
     </Grid.RowDefinitions>
 
@@ -175,14 +175,16 @@
               Padding="5"
               Header="Zeiten">
 
-      <xGrid:DataGridControl AllowDrag="False"
+      <Expander Margin="5">
+
+        <xGrid:DataGridControl AllowDrag="False"
                              AllowDrop="False"
                              ReadOnly="True"
                              AutoCreateColumns="False"
                              ItemsSource="{Binding Path=AllDaysInMonth}">
 
-        <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
-        <!--<Grid.Resources>
+          <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
+          <!--<Grid.Resources>
           <xGrid:DataGridCollectionViewSource x:Key="cvs_orders"
                                              Source="{Binding Source={x:Static Application.Current}, Path=Orders}"/>
           <Style TargetType="{x:Type xGrid:DataRow}">
@@ -199,63 +201,64 @@
         <xGrid:DataGridControl x:Name="OrdersGrid"
                               ItemsSource="{Binding Source={StaticResource cvs_orders}}"/>-->
 
-        <xGrid:DataGridControl.View>
-          <xGrid:TableView UseDefaultHeadersFooters="False">
-            <xGrid:TableView.FixedHeaders>
-              <DataTemplate>
-                <xGrid:ColumnManagerRow />
-              </DataTemplate>
-            </xGrid:TableView.FixedHeaders>
-          </xGrid:TableView>
-        </xGrid:DataGridControl.View>
+          <xGrid:DataGridControl.View>
+            <xGrid:TableView UseDefaultHeadersFooters="False">
+              <xGrid:TableView.FixedHeaders>
+                <DataTemplate>
+                  <xGrid:ColumnManagerRow />
+                </DataTemplate>
+              </xGrid:TableView.FixedHeaders>
+            </xGrid:TableView>
+          </xGrid:DataGridControl.View>
 
-        <xGrid:DataGridControl.Columns>
+          <xGrid:DataGridControl.Columns>
 
-          <xGrid:Column FieldName="StartTime"
+            <xGrid:Column FieldName="StartTime"
                         Title="Start Time">
-            <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="StartTime" >
-              </xGrid:DataGridBindingInfo>
-            </xGrid:Column.DisplayMemberBindingInfo>
-          </xGrid:Column>
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="StartTime" >
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
 
-          <xGrid:Column FieldName="DefaultWorkLength"
+            <xGrid:Column FieldName="DefaultWorkLength"
                         Title="Daily Work Length">
-            <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
-              </xGrid:DataGridBindingInfo>
-            </xGrid:Column.DisplayMemberBindingInfo>
-          </xGrid:Column>
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
 
-          <xGrid:Column FieldName="TotalBreakLength"
+            <xGrid:Column FieldName="TotalBreakLength"
                         Title="Total Break Length">
-            <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="TotalBreakLength">
-              </xGrid:DataGridBindingInfo>
-            </xGrid:Column.DisplayMemberBindingInfo>
-          </xGrid:Column>
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="TotalBreakLength">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
 
-          <xGrid:Column FieldName="RemainingTime"
+            <xGrid:Column FieldName="RemainingTime"
                         Title="Remaining Time">
-            <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="RemainingTime">
-              </xGrid:DataGridBindingInfo>
-            </xGrid:Column.DisplayMemberBindingInfo>
-          </xGrid:Column>
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="RemainingTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
 
-          <!-- TODO: Implement background color -->
-          <xGrid:Column FieldName="TargetTime"
+            <!-- TODO: Implement background color -->
+            <xGrid:Column FieldName="TargetTime"
                         Title="Target Time">
-            <xGrid:Column.DisplayMemberBindingInfo>
-              <xGrid:DataGridBindingInfo Path="TargetTime">
-              </xGrid:DataGridBindingInfo>
-            </xGrid:Column.DisplayMemberBindingInfo>
-          </xGrid:Column>
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="TargetTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
 
-        </xGrid:DataGridControl.Columns>
+          </xGrid:DataGridControl.Columns>
 
-      </xGrid:DataGridControl>
+        </xGrid:DataGridControl>
 
+      </Expander>
     </GroupBox>
   </Grid>
 </Window>
