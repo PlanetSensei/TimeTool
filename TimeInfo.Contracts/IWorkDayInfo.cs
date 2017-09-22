@@ -19,6 +19,11 @@ namespace TimeTool.Contracts
     TimeSpan DefaultWorkLength { get; set; }
 
     /// <summary>
+    /// Gets or sets the time when the user finished work on this day.
+    /// </summary>
+    DateTime EndTime { get; set; }
+
+    /// <summary>
     /// Gets or sets the time when the user started work on this day.
     /// </summary>
     DateTime StartTime { get; set; }

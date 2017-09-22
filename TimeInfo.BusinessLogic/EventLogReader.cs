@@ -27,6 +27,23 @@ namespace TimeTool.BusinessLogic
     private const long WinLogIdSystem = 7001;
 
     /// <summary>
+    /// Represents the ID of the event that is fired at the begin of the log off.
+    /// </summary>
+    private const long BeginLogOff = 4647;
+
+    //512 / 4608  STARTUP
+    //  * 513 / 4609  SHUTDOWN
+    //  * 528 / 4624  LOGON
+    //  * 538 / 4634  LOGOFF
+    //  * 551 / 4647  BEGIN_LOGOFF <= Sieht am vielversprechendsten aus.Beachte Sicherheits-ID garbsen1\[Benutzername] oder Kontoname = [Benutzernamen]
+    //* N/A / 4778  SESSION_RECONNECTED
+    //  * N/A / 4779  SESSION_DISCONNECTED
+    //  * N/A / 4800  WORKSTATION_LOCKED
+    //  * 4801    WORKSTATION_UNLOCKED
+    //  * N/A / 4802  SCREENSAVER_INVOKED
+    //  * N/A / 4803  SCREENSAVER_DISMISSED
+
+    /// <summary>
     /// The actual name of SECURITY event log.
     /// </summary>
     private const string EventLogSecurity = "Security";
@@ -85,6 +102,38 @@ namespace TimeTool.BusinessLogic
     }
 
     /// <summary>
+    /// Tries to find the time when the user stopped working on the specified <paramref name="day" />.
+    /// </summary>
+    /// <param name="day">The day for which the inforation is gathered.</param>
+    /// <returns>Returns the found most appropriate work end of the day.</returns>
+    internal static DateTime GetLogOff(DateTime day)
+    {
+      // Tracking User Logon Activity Using Logon Events
+      // https://blogs.msdn.microsoft.com/ericfitz/2008/08/20/tracking-user-logon-activity-using-logon-events/
+      /*
+       * 512 / 4608  STARTUP
+       * 513 / 4609  SHUTDOWN
+       * 528 / 4624  LOGON
+       * 538 / 4634  LOGOFF
+       * 551 / 4647  BEGIN_LOGOFF <= Sieht am vielversprechendsten aus. Beachte Sicherheits-ID garbsen1\[Benutzername] oder Kontoname = [Benutzernamen]
+       * N/A / 4778  SESSION_RECONNECTED
+       * N/A / 4779  SESSION_DISCONNECTED
+       * N/A / 4800  WORKSTATION_LOCKED
+       * 4801    WORKSTATION_UNLOCKED
+       * N/A / 4802  SCREENSAVER_INVOKED
+       * N/A / 4803  SCREENSAVER_DISMISSED
+       */
+
+      // Not totally accurate. But at the moment the best I can do.
+      IList<EventLogEntry> entries = GetLogOffFromEventLog(EventLogSecurity, BeginLogOff, day);
+
+      var lastLogoff = entries.Count > 0 ? entries.Max(e => e.TimeGenerated) : day;
+
+      var localTime = lastLogoff.ToLocalTime();
+      return localTime;
+    }
+
+    /// <summary>
     /// Gets all EventLog entries with the specified <paramref name="eventId"/>.
     /// </summary>
     /// <param name="logName">The name of the EventLog from which the entries will be collected.</param>
@@ -96,9 +145,10 @@ namespace TimeTool.BusinessLogic
       using (EventLog eventLog = new EventLog(logName))
       {
         IList<EventLogEntry> entries = new List<EventLogEntry>();
+        var nextDay = day.Date.AddDays(1);
 
         // TODO: Check a time RANGE instead
-        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > day; i--)
+        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > day && eventLog.Entries[i].TimeWritten < nextDay; i--)
         {
           var entry = eventLog.Entries[i];
 
@@ -106,6 +156,35 @@ namespace TimeTool.BusinessLogic
           {
             entries.Add(eventLog.Entries[i]);
           }
+        }
+
+        return entries;
+      }
+    }
+
+    private static IList<EventLogEntry> GetLogOffFromEventLog(string logName, long eventId, DateTime day)
+    {
+      using (EventLog eventLog = new EventLog(logName))
+      {
+        IList<EventLogEntry> entries = new List<EventLogEntry>();
+        var nextDay = day.Date.AddDays(1);
+
+        // TODO: Check a time RANGE instead
+        for (var i = eventLog.Entries.Count - 1; eventLog.Entries[i].TimeWritten > day; i--)
+        {
+          var entry = eventLog.Entries[i];
+          
+          if (entry.InstanceId != eventId)
+          {
+            continue;
+          }
+
+          if (!(entry.TimeWritten < nextDay))
+          {
+            continue;
+          }
+
+          entries.Add(eventLog.Entries[i]);
         }
 
         return entries;

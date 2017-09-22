@@ -24,6 +24,11 @@ namespace TimeTool.ViewModels
     private TimeSpan defaulWorkLenth;
 
     /// <summary>
+    /// Gets or sets the time when the user finished work on this day.
+    /// </summary>
+    private DateTime endTime;
+
+    /// <summary>
     /// Gets or sets the calculated difference time that shows the user whether he worked overtime or undertime.
     /// </summary>
     private TimeSpan remainingTime;
@@ -62,6 +67,21 @@ namespace TimeTool.ViewModels
       {
         this.Set(ref this.defaulWorkLenth, value);
         this.UpdateTimeValues();
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the time when the user finished work on this day.
+    /// </summary>
+    public DateTime EndTime
+    {
+      get
+      {
+        return this.endTime;
+      }
+      set
+      {
+        this.endTime = value;
       }
     }
 

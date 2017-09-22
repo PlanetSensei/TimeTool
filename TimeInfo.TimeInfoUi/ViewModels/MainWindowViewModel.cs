@@ -67,6 +67,8 @@ namespace TimeTool.ViewModels
         this.Today.StartTime = logon;
       }
 
+      UserInfo.SetLastDayWorkEndTimeIfEmpty(this.Today);
+
       this.UpdateCommand = new RelayCommand(
                              () =>
                                {
