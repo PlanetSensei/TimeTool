@@ -167,6 +167,21 @@ namespace TimeTool.ViewModels
     }
 
     /// <summary>
+    /// Finds the application version that is set during ClickOnce publish.
+    /// </summary>
+    /// <returns>Returns the found version number or a notification text if the version could be found.</returns>
+    private static string GetPublishedVersion()
+    {
+      if (ApplicationDeployment.IsNetworkDeployed)
+      {
+        return ApplicationDeployment.CurrentDeployment.
+                      CurrentVersion.ToString();
+      }
+
+      return "Version number only visible after publishing the application.";
+    }
+
+    /// <summary>
     /// Assign the available work day objects to the colelction that is bound to the UI.
     /// </summary>
     /// <param name="workdayInfos">The available work day objects.</param>
@@ -234,21 +249,6 @@ namespace TimeTool.ViewModels
       }
 
       return workdayInfos;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    private string GetPublishedVersion()
-    {
-      if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
-      {
-        return System.Deployment.Application.ApplicationDeployment.CurrentDeployment.
-                      CurrentVersion.ToString();
-      }
-
-      return "Not network deployed";
     }
   }
 }

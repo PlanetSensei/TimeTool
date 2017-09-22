@@ -218,16 +218,57 @@
 
           <xGrid:DataGridControl.Columns>
 
-            <xGrid:Column FieldName="StartTime"
-                          Title="Start Time">
+            <xGrid:Column FieldName="Date"
+                          Title="Date">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding StringFormat=dd.MM.yyyy}"/>
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+
               <xGrid:Column.DisplayMemberBindingInfo>
-                <xGrid:DataGridBindingInfo Path="StartTime" >
+                <xGrid:DataGridBindingInfo Path="StartTime">
                 </xGrid:DataGridBindingInfo>
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>
 
+
+
+            <xGrid:Column FieldName="StartTime"
+                          Title="Start Time">
+              
+                <xGrid:Column.CellContentTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding StringFormat=hh:mm:ss}"/>
+                  </DataTemplate>
+                </xGrid:Column.CellContentTemplate>
+              
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="StartTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
+
+
+
+            <!--<xGrid:Column FieldName="StartTime"
+                          Title="Start Time">
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="StartTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>-->
+
             <xGrid:Column FieldName="EndTime"
                           Title="End Time">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding StringFormat=hh:mm:ss}"/>
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+              
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="EndTime" >
                 </xGrid:DataGridBindingInfo>
@@ -236,6 +277,22 @@
 
             <xGrid:Column FieldName="RemainingTime"
                           Title="Remaining Time">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <!--<TextBlock Text="{Binding StringFormat=c}"/>-->
+                  <TextBlock>
+                    <TextBlock.Text>
+                      <MultiBinding StringFormat="{}{0}:{1}:{2}">
+                        <Binding Path="Hours" />
+                        <Binding Path="Minutes" />
+                        <Binding Path="Seconds" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+              
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="RemainingTime">
                 </xGrid:DataGridBindingInfo>
@@ -245,6 +302,13 @@
             <!-- TODO: Implement background color -->
             <xGrid:Column FieldName="TargetTime"
                           Title="Target Time">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding StringFormat=dd.MM.yyyy hh:mm:ss}"/>
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+              
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="TargetTime">
                 </xGrid:DataGridBindingInfo>
