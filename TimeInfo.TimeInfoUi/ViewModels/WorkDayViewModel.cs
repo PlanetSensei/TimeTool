@@ -21,7 +21,7 @@ namespace TimeTool.ViewModels
     /// <summary>
     /// Gets or sets the expected length of work on this day.
     /// </summary>
-    private TimeSpan defaulWorkLenth;
+    private TimeSpan defaulWorkLength;
 
     /// <summary>
     /// Gets or sets the time when the user finished work on this day.
@@ -60,12 +60,12 @@ namespace TimeTool.ViewModels
     {
       get
       {
-        return this.defaulWorkLenth;
+        return this.defaulWorkLength;
       }
 
       set
       {
-        this.Set(ref this.defaulWorkLenth, value);
+        this.Set(ref this.defaulWorkLength, value);
         this.UpdateTimeValues();
       }
     }
@@ -79,6 +79,7 @@ namespace TimeTool.ViewModels
       {
         return this.endTime;
       }
+
       set
       {
         this.endTime = value;

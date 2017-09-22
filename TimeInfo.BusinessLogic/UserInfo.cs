@@ -33,13 +33,10 @@ namespace TimeTool.BusinessLogic
     /// </summary>
     /// <param name="day">Defines the specific day from which the data will be looked up.</param>
     /// <returns>Returns latest logon time in LOCAL time.</returns>
-    public static void SetLastDayWorkEndTimeIfEmpty(IWorkdayInfo day)
+    public static DateTime SetLastDayWorkEndTimeIfEmpty(DateTime day)
     {
-      var yesterday = day.StartTime.AddDays(-1);
-      var logOn = EventLogReader.GetLogOff(yesterday);
-
-      // TODO: Get yesterday instance from DB.
-      // TODO: Set EndDate value and save in DB
+      var logOff = EventLogReader.GetLogOff(day);
+      return logOff;
     }
   }
 }

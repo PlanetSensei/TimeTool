@@ -109,6 +109,7 @@ namespace TimeTool.DataAccess
     private static void MapValues(IWorkdayInfo source, Workday target)
     {
       target.StartTime = source.StartTime;
+      target.EndTime = source.EndTime;
       target.DefaultWorkLength = source.DefaultWorkLength;
       target.TotalBreakLength = source.TotalBreakLength;
     }

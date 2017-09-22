@@ -47,6 +47,7 @@
     </Grid.ColumnDefinitions>
 
     <Grid.RowDefinitions>
+      <RowDefinition Height="25"/>
       <RowDefinition />
       <RowDefinition />
       <!--<RowDefinition Height="Auto"/>-->
@@ -54,7 +55,7 @@
 
     <!-- TODO: Exttract into external UserControl -->
     <GroupBox Grid.Column="0"
-              Grid.Row="0"
+              Grid.Row="1"
               Margin="5"
               Padding="5"
               Header="Arbeitstag">
@@ -108,7 +109,7 @@
 
     <!-- TODO: Exttract into external UserControl -->
     <GroupBox Grid.Column="1"
-              Grid.Row="0"
+              Grid.Row="1"
               Margin="5"
               Padding="5"
               Header="Rest">
@@ -156,7 +157,7 @@
 
     <!-- TODO: Exttract into external UserControl -->
     <GroupBox Grid.Column="2"
-              Grid.Row="0"
+              Grid.Row="1"
               Margin="5"
               Padding="5">
 
@@ -170,7 +171,7 @@
 
     <GroupBox Grid.Column="0"
               Grid.ColumnSpan="3"
-              Grid.Row="1"
+              Grid.Row="2"
               Margin="5"
               Padding="5"
               Header="Zeiten">
@@ -182,10 +183,10 @@
                 IsExpanded="True">
 
         <xGrid:DataGridControl AllowDrag="False"
-                             AllowDrop="False"
-                             ReadOnly="True"
-                             AutoCreateColumns="False"
-                             ItemsSource="{Binding Path=AllDaysInMonth}">
+                               AllowDrop="False"
+                               ReadOnly="True"
+                               AutoCreateColumns="False"
+                               ItemsSource="{Binding Path=AllDaysInMonth}">
 
           <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
           <!--<Grid.Resources>
@@ -218,31 +219,23 @@
           <xGrid:DataGridControl.Columns>
 
             <xGrid:Column FieldName="StartTime"
-                        Title="Start Time">
+                          Title="Start Time">
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="StartTime" >
                 </xGrid:DataGridBindingInfo>
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>
 
-            <xGrid:Column FieldName="DefaultWorkLength"
-                        Title="Daily Work Length">
+            <xGrid:Column FieldName="EndTime"
+                          Title="End Time">
               <xGrid:Column.DisplayMemberBindingInfo>
-                <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
-                </xGrid:DataGridBindingInfo>
-              </xGrid:Column.DisplayMemberBindingInfo>
-            </xGrid:Column>
-
-            <xGrid:Column FieldName="TotalBreakLength"
-                        Title="Total Break Length">
-              <xGrid:Column.DisplayMemberBindingInfo>
-                <xGrid:DataGridBindingInfo Path="TotalBreakLength">
+                <xGrid:DataGridBindingInfo Path="EndTime" >
                 </xGrid:DataGridBindingInfo>
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>
 
             <xGrid:Column FieldName="RemainingTime"
-                        Title="Remaining Time">
+                          Title="Remaining Time">
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="RemainingTime">
                 </xGrid:DataGridBindingInfo>
@@ -251,9 +244,25 @@
 
             <!-- TODO: Implement background color -->
             <xGrid:Column FieldName="TargetTime"
-                        Title="Target Time">
+                          Title="Target Time">
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="TargetTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
+
+            <xGrid:Column FieldName="DefaultWorkLength"
+                          Title="Daily Work Length">
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
+
+            <xGrid:Column FieldName="TotalBreakLength"
+                          Title="Total Break Length">
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="TotalBreakLength">
                 </xGrid:DataGridBindingInfo>
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>
@@ -264,6 +273,13 @@
 
       </Expander>
     </GroupBox>
+
+    <StackPanel Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.Row="0">
+      <Label Content="{Binding Path=AppVersion}" />
+    </StackPanel>
+    
   </Grid>
 </Window>
 

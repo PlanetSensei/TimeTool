@@ -99,6 +99,7 @@ namespace TimeTool.DataAccess
         var info = new Workday
                      {
                        DefaultWorkLength = workday.DefaultWorkLength,
+                       EndTime = workday.EndTime,
                        StartTime = workday.StartTime,
                        TotalBreakLength = workday.TotalBreakLength,
                        WorkdayId = workday.WorkdayId

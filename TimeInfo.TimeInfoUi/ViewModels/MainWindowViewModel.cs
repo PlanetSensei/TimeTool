@@ -8,7 +8,9 @@ namespace TimeTool.ViewModels
 {
   using System;
   using System.Collections.ObjectModel;
+  using System.Deployment.Application;
   using System.Linq;
+  using System.Reflection;
 
   using GalaSoft.MvvmLight;
   using GalaSoft.MvvmLight.CommandWpf;
@@ -32,6 +34,11 @@ namespace TimeTool.ViewModels
     /// Contains the fully qualified path and file name of the database.
     /// </summary>
     private readonly string database;
+
+    /// <summary>
+    /// Gets the collection that contains all work days in the current month.
+    /// </summary>
+    private string appVersion;
 
     /// <summary>
     /// Gets or sets the collection that contains all work days in the current month.
@@ -67,17 +74,37 @@ namespace TimeTool.ViewModels
         this.Today.StartTime = logon;
       }
 
-      UserInfo.SetLastDayWorkEndTimeIfEmpty(this.Today);
+      //this.AppVersion = Assembly.GetExecutingAssembly()
+      //                          .GetName()
+      //                          .Version.ToString();
+      this.AppVersion = GetPublishedVersion();
+
 
       this.UpdateCommand = new RelayCommand(
-                             () =>
-                               {
-                                 this.Today.RemainingTime = Calculator.GetDeltaTime(
-                                   this.Today.StartTime,
-                                   this.Today.DefaultWorkLength,
-                                   this.Today.TotalBreakLength,
-                                   DateTime.Now);
-                               });
+        () =>
+          {
+            this.Today.RemainingTime = Calculator.GetDeltaTime(
+              this.Today.StartTime,
+              this.Today.DefaultWorkLength,
+              this.Today.TotalBreakLength,
+              DateTime.Now);
+          });
+    }
+
+    /// <summary>
+    /// Gets the collection that contains all work days in the current month.
+    /// </summary>
+    public string AppVersion
+  {
+      get
+      {
+        return this.appVersion;
+      }
+
+      private set
+      {
+        this.Set(ref this.appVersion, value);
+      }
     }
 
     /// <summary>
@@ -154,6 +181,7 @@ namespace TimeTool.ViewModels
         var viewModel = new WorkdayViewModel
                           {
                             DefaultWorkLength = info.DefaultWorkLength,
+                            EndTime = info.EndTime,
                             StartTime = info.StartTime,
                             TotalBreakLength = info.TotalBreakLength,
                             WorkdayId = info.WorkdayId
@@ -206,6 +234,21 @@ namespace TimeTool.ViewModels
       }
 
       return workdayInfos;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private string GetPublishedVersion()
+    {
+      if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+      {
+        return System.Deployment.Application.ApplicationDeployment.CurrentDeployment.
+                      CurrentVersion.ToString();
+      }
+
+      return "Not network deployed";
     }
   }
 }

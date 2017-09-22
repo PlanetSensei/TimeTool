@@ -31,12 +31,12 @@ namespace TimeTool.BusinessLogic
     /// </summary>
     private const long BeginLogOff = 4647;
 
-    //512 / 4608  STARTUP
+    // 512 / 4608  STARTUP
     //  * 513 / 4609  SHUTDOWN
     //  * 528 / 4624  LOGON
     //  * 538 / 4634  LOGOFF
     //  * 551 / 4647  BEGIN_LOGOFF <= Sieht am vielversprechendsten aus.Beachte Sicherheits-ID garbsen1\[Benutzername] oder Kontoname = [Benutzernamen]
-    //* N/A / 4778  SESSION_RECONNECTED
+    //  * N/A / 4778  SESSION_RECONNECTED
     //  * N/A / 4779  SESSION_DISCONNECTED
     //  * N/A / 4800  WORKSTATION_LOCKED
     //  * 4801    WORKSTATION_UNLOCKED

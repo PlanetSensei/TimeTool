@@ -7,8 +7,8 @@
     <ProjectGuid>{BC99BD74-577E-46D7-A4C6-80B34B785459}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeveloperTests</RootNamespace>
-    <AssemblyName>DeveloperTests</AssemblyName>
+    <RootNamespace>TimeTool.DeveloperTests</RootNamespace>
+    <AssemblyName>TimeTool.DeveloperTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,6 +47,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TimeInfo.BusinessLogic\TimeTool.BusinessLogic.csproj">
+      <Project>{C5B10262-7A73-4940-B259-E230EF6B44DE}</Project>
+      <Name>TimeTool.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TimeInfo.Contracts\TimeTool.Contracts.csproj">
+      <Project>{9184e08a-eab6-4243-9344-994c5188e666}</Project>
+      <Name>TimeTool.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TimeTool.DataAccess\TimeTool.DataAccess.csproj">
+      <Project>{B2340FFE-56DE-4A2A-9F42-59A4A71F5FF3}</Project>
+      <Name>TimeTool.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
