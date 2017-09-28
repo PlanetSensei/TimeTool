@@ -7,6 +7,7 @@
         xmlns:xGrid="http://schemas.xceed.com/wpf/xaml/datagrid"
         xmlns:viewModels="clr-namespace:TimeTool.ViewModels"
         xmlns:infrastructure="clr-namespace:TimeTool.Infrastructure"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="TimeTool"
         SizeToContent="WidthAndHeight"
@@ -182,12 +183,13 @@
                 Header="Auf- oder Zuklappen"
                 IsExpanded="True">
 
-        <xGrid:DataGridControl AllowDrag="False"
+        <xGrid:DataGridControl x:Name="timeTable"
+                               AllowDrag="False"
                                AllowDrop="False"
-                               ReadOnly="True"
+                               ReadOnly="False"
                                AutoCreateColumns="False"
                                ItemsSource="{Binding Path=AllDaysInMonth}">
-
+          
           <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
           <!--<Grid.Resources>
           <xGrid:DataGridCollectionViewSource x:Key="cvs_orders"
@@ -216,14 +218,55 @@
             </xGrid:TableView>
           </xGrid:DataGridControl.View>
 
+          <!--<xGrid:DataGridControl.DefaultCellEditors>
+            <xGrid:CellEditor x:Key="{x:Type s:DateTime}">
+              <xGrid:CellEditor.EditTemplate>
+                <DataTemplate>
+                  <xctk:TimePicker Value="{xGrid:CellEditorBinding}"/>
+                </DataTemplate>
+              </xGrid:CellEditor.EditTemplate>
+            </xGrid:CellEditor>
+          </xGrid:DataGridControl.DefaultCellEditors>-->
+
           <xGrid:DataGridControl.Columns>
 
+
             <xGrid:Column FieldName="Date"
-                          Title="Date">
+                          Title="Date"
+                          ReadOnly="True">
 
               <xGrid:Column.CellContentTemplate>
                 <DataTemplate>
                   <TextBlock Text="{Binding StringFormat=dd.MM.yyyy}"/>
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+              
+
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="StartTime">
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
+
+
+              <!-- https://xceed.com/wp-content/documentation/xceed-toolkit-plus-for-wpf/Xceed.Wpf.DataGrid~Xceed.Wpf.DataGrid.ColumnBase~CellEditor.html -->
+              <!--<xGrid:Column.DefaultCellEditors>
+                <xGrid:CellEditor x:Key="{x:Type s:String}">
+                  <xGrid:CellEditor.EditTemplate>
+                    <DataTemplate>
+                      <Slider Value="{xGrid:CellEditorBinding}"/>
+                    </DataTemplate>
+                  </xGrid:CellEditor.EditTemplate>
+                </xGrid:CellEditor>
+              </xGrid:Column.DefaultCellEditors>-->
+
+
+            <xGrid:Column FieldName="StartTime"
+                          Title="Start Time">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding StringFormat=HH:mm:ss}"/>
                 </DataTemplate>
               </xGrid:Column.CellContentTemplate>
 
@@ -233,39 +276,12 @@
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>
 
-
-
-            <xGrid:Column FieldName="StartTime"
-                          Title="Start Time">
-              
-                <xGrid:Column.CellContentTemplate>
-                  <DataTemplate>
-                    <TextBlock Text="{Binding StringFormat=hh:mm:ss}"/>
-                  </DataTemplate>
-                </xGrid:Column.CellContentTemplate>
-              
-              <xGrid:Column.DisplayMemberBindingInfo>
-                <xGrid:DataGridBindingInfo Path="StartTime">
-                </xGrid:DataGridBindingInfo>
-              </xGrid:Column.DisplayMemberBindingInfo>
-            </xGrid:Column>
-
-
-
-            <!--<xGrid:Column FieldName="StartTime"
-                          Title="Start Time">
-              <xGrid:Column.DisplayMemberBindingInfo>
-                <xGrid:DataGridBindingInfo Path="StartTime">
-                </xGrid:DataGridBindingInfo>
-              </xGrid:Column.DisplayMemberBindingInfo>
-            </xGrid:Column>-->
-
             <xGrid:Column FieldName="EndTime"
                           Title="End Time">
 
               <xGrid:Column.CellContentTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding StringFormat=hh:mm:ss}"/>
+                  <TextBlock Text="{Binding StringFormat=HH:mm:ss}"/>
                 </DataTemplate>
               </xGrid:Column.CellContentTemplate>
               
@@ -276,14 +292,14 @@
             </xGrid:Column>
 
             <xGrid:Column FieldName="RemainingTime"
-                          Title="Remaining Time">
+                          Title="Remaining Time"
+                          ReadOnly="True">
 
               <xGrid:Column.CellContentTemplate>
                 <DataTemplate>
-                  <!--<TextBlock Text="{Binding StringFormat=c}"/>-->
                   <TextBlock>
                     <TextBlock.Text>
-                      <MultiBinding StringFormat="{}{0}:{1}:{2}">
+                      <MultiBinding StringFormat="{}{0:00}:{1:00}:{2:00}">
                         <Binding Path="Hours" />
                         <Binding Path="Minutes" />
                         <Binding Path="Seconds" />
@@ -301,11 +317,12 @@
 
             <!-- TODO: Implement background color -->
             <xGrid:Column FieldName="TargetTime"
-                          Title="Target Time">
+                          Title="Target Time"
+                          ReadOnly="True">
 
               <xGrid:Column.CellContentTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding StringFormat=dd.MM.yyyy hh:mm:ss}"/>
+                  <TextBlock Text="{Binding StringFormat=dd.MM.yyyy HH:mm:ss}"/>
                 </DataTemplate>
               </xGrid:Column.CellContentTemplate>
               
@@ -316,7 +333,8 @@
             </xGrid:Column>
 
             <xGrid:Column FieldName="DefaultWorkLength"
-                          Title="Daily Work Length">
+                          Title="Work Length"
+                          ReadOnly="True">
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="DefaultWorkLength">
                 </xGrid:DataGridBindingInfo>
