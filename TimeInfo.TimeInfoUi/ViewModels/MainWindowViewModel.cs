@@ -68,7 +68,7 @@ namespace TimeTool.ViewModels
       var todayDate = DateTime.Now.Date;
       this.Today = this.AllDaysInMonth.Single(day => day.StartTime.Date == todayDate);
 
-      if (this.Today.StartTime.Equals(DateTime.MinValue))
+      if (this.Today.StartTime.TimeOfDay.Equals(DateTime.MinValue.TimeOfDay))
       {
         var logon = UserInfo.GetLastLogOnToMachine(this.Today.StartTime.Date);
         this.Today.StartTime = logon;
