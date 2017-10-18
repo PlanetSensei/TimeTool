@@ -46,6 +46,11 @@ namespace TimeTool.ViewModels
     private ObservableCollection<WorkdayViewModel> allDaysInMonth;
 
     /// <summary>
+    /// Gets or sets the ionstance of the <see cref="WorkdayViewModel"/> that is currentlyy selected in the UI data grid.
+    /// </summary>
+    private WorkdayViewModel selectedWorkDay;
+
+    /// <summary>
     /// Gets or sets the <see cref="WorkdayViewModel"/> instance that represents the current day.
     /// </summary>
     private WorkdayViewModel today;
@@ -124,6 +129,22 @@ namespace TimeTool.ViewModels
     }
 
     /// <summary>
+    /// Gets or sets the ionstance of the <see cref="WorkdayViewModel"/> that is currentlyy selected in the UI data grid.
+    /// </summary>
+    public WorkdayViewModel SelectedWorkDay
+    {
+      get
+      {
+        return this.selectedWorkDay;
+      }
+
+      set
+      {
+        this.Set(ref this.selectedWorkDay, value);
+      }
+    } 
+
+    /// <summary>
     /// Gets or sets the command object that updates the UI.
     /// </summary>
     public RelayCommand UpdateCommand
@@ -162,7 +183,7 @@ namespace TimeTool.ViewModels
     {
       using (var access = new WorkdayAccess(this.database))
       {
-        access.Save(this.Today);
+        access.Save(this.AllDaysInMonth);
       }
     }
 

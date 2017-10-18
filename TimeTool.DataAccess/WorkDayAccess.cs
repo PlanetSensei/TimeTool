@@ -119,6 +119,19 @@ namespace TimeTool.DataAccess
     }
 
     /// <summary>
+    /// Saves the specified collection <paramref name="allDays"/> into the database.
+    /// </summary>
+    /// <param name="allDays">Contains all available workdays of the current month.</param>
+    public void Save(IEnumerable<IWorkdayInfo> allDays)
+    {
+      // TODO: Refactor the repository so that it can save the objects in bulk.
+      foreach (var day in allDays)
+      {
+        this.repository.Update(day);
+      }
+    }
+
+    /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     /// <param name="isDisposing">

@@ -188,7 +188,8 @@
                                AllowDrop="False"
                                ReadOnly="False"
                                AutoCreateColumns="False"
-                               ItemsSource="{Binding Path=AllDaysInMonth}">
+                               ItemsSource="{Binding Path=AllDaysInMonth}"
+                               SelectedItem="{Binding Path=SelectedWorkDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
           
           <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
           <!--<Grid.Resources>
