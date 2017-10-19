@@ -9,10 +9,14 @@ namespace TimeTool.Views
   using System;
   using System.Windows;
 
+  using GalaSoft.MvvmLight.Messaging;
+
   using TimeTool.ViewModels;
 
   using Xceed.Wpf.DataGrid;
   using Xceed.Wpf.Toolkit;
+
+  using MessageBox = Xceed.Wpf.Toolkit.MessageBox;
 
   /// <summary>
   /// Interaction logic for MainWindow.xaml
