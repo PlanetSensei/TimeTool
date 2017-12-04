@@ -10,15 +10,14 @@ namespace TimeTool.ViewModels
   using System.Collections.ObjectModel;
   using System.Deployment.Application;
   using System.Linq;
-  using System.Reflection;
-
+  using BusinessLogic;
+  using Contracts;
+  using DataAccess;
   using GalaSoft.MvvmLight;
   using GalaSoft.MvvmLight.CommandWpf;
+  using Properties;
 
-  using TimeTool.BusinessLogic;
-  using TimeTool.Contracts;
-  using TimeTool.DataAccess;
-  using TimeTool.Properties;
+  using TimeTool.Views;
 
   /// <summary>
   /// Provides interaction logic for the MainWindow.xaml view.
@@ -34,6 +33,11 @@ namespace TimeTool.ViewModels
     /// Contains the fully qualified path and file name of the database.
     /// </summary>
     private readonly string database;
+
+    /// <summary>
+    /// The editor dialog in which a single workday may be edited.
+    /// </summary>
+    private readonly WorkDayEditorView workDayEditorView;
 
     /// <summary>
     /// Gets the collection that contains all work days in the current month.
@@ -57,9 +61,14 @@ namespace TimeTool.ViewModels
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
+    /// <inheritdoc />
     /// </summary>
     public MainWindowViewModel()
     {
+      // Initialize additional dialogs
+      this.workDayEditorView = new WorkDayEditorView();
+
+      // Initialize other stuff.
       this.database = FileSystem.GetDatabaseFile();
 
       this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
@@ -76,9 +85,6 @@ namespace TimeTool.ViewModels
 
       this.Today = this.AllDaysInMonth.Single(day => DateTime.Now.Date.Equals(day.StartTime.Date));
 
-      //this.AppVersion = Assembly.GetExecutingAssembly()
-      //                          .GetName()
-      //                          .Version.ToString();
       this.AppVersion = GetPublishedVersion();
 
       this.UpdateCommand = new RelayCommand(

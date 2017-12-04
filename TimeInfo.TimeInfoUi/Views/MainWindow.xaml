@@ -7,13 +7,12 @@
         xmlns:xGrid="http://schemas.xceed.com/wpf/xaml/datagrid"
         xmlns:viewModels="clr-namespace:TimeTool.ViewModels"
         xmlns:infrastructure="clr-namespace:TimeTool.Infrastructure"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="TimeTool"
         SizeToContent="WidthAndHeight"
         Icon="/TimeTool;component/AppIcon_Clock.ico"
         WindowStartupLocation="CenterScreen"
-        Closing="Window_Closing">
+        Closing="OnWindowClosing">
 
   <!-- TODO: Extract the various UI parts into dedicated UserControls -->
 
@@ -183,13 +182,15 @@
                 Header="Auf- oder Zuklappen"
                 IsExpanded="True">
 
+        <!-- TODO: Use Behavior instead of event method -->
         <xGrid:DataGridControl x:Name="timeTable"
                                AllowDrag="False"
                                AllowDrop="False"
-                               ReadOnly="False"
+                               ReadOnly="True"
                                AutoCreateColumns="False"
                                ItemsSource="{Binding Path=AllDaysInMonth}"
-                               SelectedItem="{Binding Path=Today, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                               SelectedItem="{Binding Path=Today, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               MouseDoubleClick="OnTimeTableMouseDoubleClick">
           
           <!-- TODO: evaluate if this works for cell colors for overtime/ undertime -->
           <!--<Grid.Resources>

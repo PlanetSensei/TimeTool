@@ -144,8 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\OpenEditorMessage.cs" />
     <Compile Include="Infrastructure\OvertimeStyleConverter.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\WorkDayEditorViewModel.cs" />
     <Compile Include="ViewModels\WorkDayViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

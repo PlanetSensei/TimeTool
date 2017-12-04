@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿//-----------------------------------------------------------------------
+// <copyright file="WorkDayEditorView.xaml.cs" company="Jens Hellmann">
+//   Copyright (c) Jens Hellmann. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace TimeTool.Views
 {
+  using System.Windows;
+
+  using TimeTool.ViewModels;
+
   /// <summary>
   /// Interaction logic for WorkDayEditorView.xaml
   /// </summary>
   public partial class WorkDayEditorView : Window
   {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WorkDayEditorView"/> class.
+    /// <inheritdoc />
+    /// </summary>
     public WorkDayEditorView()
     {
-      InitializeComponent();
+      this.InitializeComponent();
     }
   }
 }

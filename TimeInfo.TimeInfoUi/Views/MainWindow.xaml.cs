@@ -11,12 +11,11 @@ namespace TimeTool.Views
 
   using GalaSoft.MvvmLight.Messaging;
 
+  using TimeTool.Infrastructure;
   using TimeTool.ViewModels;
 
   using Xceed.Wpf.DataGrid;
   using Xceed.Wpf.Toolkit;
-
-  using MessageBox = Xceed.Wpf.Toolkit.MessageBox;
 
   /// <summary>
   /// Interaction logic for MainWindow.xaml
@@ -29,25 +28,6 @@ namespace TimeTool.Views
     public MainWindow()
     {
       this.InitializeComponent();
-
-      var editor = new CellEditor();
-      editor.EditTemplate = new DataTemplate(typeof(TimePicker));
-
-      if (this.timeTable.DefaultCellEditors.ContainsKey(typeof(DateTime)))
-      {
-        editor = this.timeTable.DefaultCellEditors[typeof(DateTime)];
-        editor.EditTemplate = new DataTemplate(new TimePicker());
-      }
-      else
-      {
-        editor = new CellEditor();
-        editor.EditTemplate = new DataTemplate(typeof(TimePicker));
-
-        this.timeTable.DefaultCellEditors.Add(typeof(DateTime), editor);
-      }
-
-      this.timeTable.Columns["StartTime"]
-          .CellEditor = editor;
     }
 
     /// <summary>
@@ -56,10 +36,20 @@ namespace TimeTool.Views
     /// </summary>
     /// <param name="sender">The object that triggered this event.</param>
     /// <param name="e">Contains the event specific information.</param>
-    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
     {
       var viewModel = (MainWindowViewModel)this.DataContext;
       viewModel.Save();
+    }
+
+    /// <summary>
+    /// Sends out a message if the user double-clicked onto the time table grid control.
+    /// </summary>
+    /// <param name="sender">The object that triggered this event.</param>
+    /// <param name="e">Contains the event specific information.</param>
+    private void OnTimeTableMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      Messenger.Default.Send<OpenEditorMessage>(new OpenEditorMessage());
     }
   }
 }
