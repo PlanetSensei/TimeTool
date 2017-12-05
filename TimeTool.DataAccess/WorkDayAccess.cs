@@ -90,8 +90,9 @@ namespace TimeTool.DataAccess
     {
       var workdays = this.repository.GetDays();
 
-      var monthstart = new DateTime(year, month, 1);
-      var nextMonth = new DateTime(year, month + 1, 1);
+      var monthstart = Dates.GetFirstOfMonth(year, month);
+      var nextMonth = monthstart.AddMonths(1);
+
       var daysInMonth = workdays.Where(day => day.StartTime >= monthstart && day.StartTime < nextMonth);
 
       foreach (var workday in daysInMonth)

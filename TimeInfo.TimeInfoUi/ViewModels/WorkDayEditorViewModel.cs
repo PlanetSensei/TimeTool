@@ -56,7 +56,7 @@ namespace TimeTool.ViewModels
     /// <param name="message">The received message instance.</param>
     private void ShowEditor(OpenEditorMessage message)
     {
-      this.Visibility = Visibility.Hidden;
+      this.Visibility = Visibility.Visible;
     }
   }
 }
