@@ -30,16 +30,6 @@ namespace TimeTool.ViewModels
     private readonly Settings appSettings = new Settings();
 
     /// <summary>
-    /// Contains the fully qualified path and file name of the database.
-    /// </summary>
-    private readonly string database;
-
-    /// <summary>
-    /// The editor dialog in which a single workday may be edited.
-    /// </summary>
-    private readonly WorkDayEditorView workDayEditorView;
-
-    /// <summary>
     /// Gets the collection that contains all work days in the current month.
     /// </summary>
     private string appVersion;
@@ -48,6 +38,11 @@ namespace TimeTool.ViewModels
     /// Gets or sets the collection that contains all work days in the current month.
     /// </summary>
     private ObservableCollection<WorkdayViewModel> allDaysInMonth;
+
+    /// <summary>
+    /// Contains the fully qualified path and file name of the database.
+    /// </summary>
+    private string database;
 
     /// <summary>
     /// Gets or sets the <see cref="WorkdayViewModel"/> instance that represents the current day.
@@ -65,37 +60,6 @@ namespace TimeTool.ViewModels
     /// </summary>
     public MainWindowViewModel()
     {
-      // Initialize additional dialogs
-      this.workDayEditorView = new WorkDayEditorView();
-
-      // Initialize other stuff.
-      this.database = FileSystem.GetDatabaseFile();
-
-      this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
-      this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
-
-      var todayDate = DateTime.Now.Date;
-      this.Today = this.AllDaysInMonth.Single(day => day.StartTime.Date == todayDate);
-
-      if (this.Today.StartTime.TimeOfDay.Equals(DateTime.MinValue.TimeOfDay))
-      {
-        var logon = UserInfo.GetLastLogOnToMachine(this.Today.StartTime.Date);
-        this.Today.StartTime = logon;
-      }
-
-      this.Today = this.AllDaysInMonth.Single(day => DateTime.Now.Date.Equals(day.StartTime.Date));
-
-      this.AppVersion = GetPublishedVersion();
-
-      this.UpdateCommand = new RelayCommand(
-        () =>
-          {
-            this.Today.RemainingTime = Calculator.GetDeltaTime(
-              this.Today.StartTime,
-              this.Today.DefaultWorkLength,
-              this.Today.TotalBreakLength,
-              DateTime.Now);
-          });
     }
 
     /// <summary>
@@ -171,6 +135,38 @@ namespace TimeTool.ViewModels
       {
         access.Save(this.AllDaysInMonth);
       }
+    }
+
+    internal void Initialize()
+    {
+      // Initialize other stuff.
+      this.database = FileSystem.GetDatabaseFile();
+
+      this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
+      this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);
+
+      var todayDate = DateTime.Now.Date;
+      this.Today = this.AllDaysInMonth.Single(day => day.StartTime.Date == todayDate);
+
+      if (this.Today.StartTime.TimeOfDay.Equals(DateTime.MinValue.TimeOfDay))
+      {
+        var logon = UserInfo.GetLastLogOnToMachine(this.Today.StartTime.Date);
+        this.Today.StartTime = logon;
+      }
+
+      this.Today = this.AllDaysInMonth.Single(day => DateTime.Now.Date.Equals(day.StartTime.Date));
+
+      this.AppVersion = GetPublishedVersion();
+
+      this.UpdateCommand = new RelayCommand(
+        () =>
+        {
+          this.Today.RemainingTime = Calculator.GetDeltaTime(
+            this.Today.StartTime,
+            this.Today.DefaultWorkLength,
+            this.Today.TotalBreakLength,
+            DateTime.Now);
+        });
     }
 
     /// <summary>

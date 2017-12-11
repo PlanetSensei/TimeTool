@@ -49,7 +49,13 @@ namespace TimeTool.Views
     /// <param name="e">Contains the event specific information.</param>
     private void OnTimeTableMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-      Messenger.Default.Send<OpenEditorMessage>(new OpenEditorMessage());
+      Messenger.Default.Send(new OpenEditorMessage());
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+      var viewModel = (MainWindowViewModel)this.DataContext;
+      viewModel.Initialize();
     }
   }
 }

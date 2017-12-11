@@ -12,7 +12,7 @@
         SizeToContent="WidthAndHeight"
         Icon="/TimeTool;component/AppIcon_Clock.ico"
         WindowStartupLocation="CenterScreen"
-        Closing="OnWindowClosing">
+        Closing="OnWindowClosing" Loaded="Window_Loaded">
 
   <!-- TODO: Extract the various UI parts into dedicated UserControls -->
 
