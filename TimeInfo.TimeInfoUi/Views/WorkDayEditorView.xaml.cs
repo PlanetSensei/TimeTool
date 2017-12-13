@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="WorkDayEditorView.xaml.cs" company="Jens Hellmann">
+// <copyright file="WorkdayEditorView.xaml.cs" company="Jens Hellmann">
 //   Copyright (c) Jens Hellmann. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------

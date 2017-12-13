@@ -7,14 +7,14 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Workday Editor"
-        Height="220"
+        Height="230"
         Width="220"
         Visibility="{Binding Path=Visibility}">
 
   <!-- Initialize the ViewModel -->
-  <Window.DataContext>
+  <!--<Window.DataContext>
     <viewModels:WorkDayEditorViewModel />
-  </Window.DataContext>
+  </Window.DataContext>-->
   
   <Grid>
 
@@ -53,7 +53,7 @@
                          ShowButtonSpinner="False"
                          ShowDropDownButton="False"
                          UpdateValueOnEnterKey="True"
-                         Value="{Binding Path=Today.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Value="{Binding Path=Day.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <Label Grid.Column="0"
                Grid.Row="1"
@@ -62,7 +62,7 @@
         <xctk:TimeSpanUpDown Grid.Column="1"
                              Grid.Row="1"
                              ShowButtonSpinner="False"
-                             Value="{Binding Path=Today.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
+                             Value="{Binding Path=Day.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Column="0"
                Grid.Row="2"
@@ -71,7 +71,7 @@
         <xctk:TimeSpanUpDown Grid.Column="1"
                              Grid.Row="2"
                              ShowButtonSpinner="False"
-                             Value="{Binding Path=Today.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
+                             Value="{Binding Path=Day.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Column="0"
                Grid.Row="3"
@@ -80,7 +80,7 @@
         <xctk:TimeSpanUpDown Grid.Column="1"
                              Grid.Row="3"
                              ShowButtonSpinner="False"
-                             Value="{Binding Path=Today.EndTime, UpdateSourceTrigger=PropertyChanged}" />
+                             Value="{Binding Path=Day.EndTime, UpdateSourceTrigger=PropertyChanged}" />
 
       </Grid>
 

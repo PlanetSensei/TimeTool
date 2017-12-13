@@ -7,18 +7,23 @@
 namespace TimeTool.ViewModels
 {
   using System.Windows;
-
+  using Contracts;
   using GalaSoft.MvvmLight;
   using GalaSoft.MvvmLight.Messaging;
-
-  using TimeTool.Infrastructure;
-  using TimeTool.Views;
+  using Infrastructure;
+  using JetBrains.Annotations;
+  using Views;
 
   /// <summary>
-  /// Provides intaeraction logic for <see cref="WorkDayEditorView"/> dialog.
+  /// Provides intaeraction logic for <see cref="WorkdayEditorView"/> dialog.
   /// </summary>
   public class WorkDayEditorViewModel : ViewModelBase
   {
+    /// <summary>
+    /// The acutual editor window.
+    /// </summary>
+    private readonly WorkdayEditorView editorView;
+
     /// <summary>
     /// Gets or sets a value indicating whether this window is
     /// visible (<see langword="true"/>) or not (<see langword="false"/>).
@@ -26,11 +31,36 @@ namespace TimeTool.ViewModels
     private Visibility visibility;
 
     /// <summary>
+    /// Gets or sets the <see cref="IWorkdayInfo"/> instance that is currently edited in the editor view.
+    /// </summary>
+    private WorkdayViewModel day;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="WorkDayEditorViewModel"/> class.
     /// </summary>
     public WorkDayEditorViewModel()
     {
-      Messenger.Default.Register<OpenEditorMessage>(this, this.ShowEditor);
+      this.editorView = new WorkdayEditorView
+      {
+        DataContext = this
+      };
+
+
+      this.Visibility = Visibility.Hidden;
+
+      Messenger.Default.Register<OpenEditorMessage>(this, this.ToggleVisibility);
+      Messenger.Default.Register<SelectedDayChangedMessage>(this, this.UpdateView);
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="IWorkdayInfo"/> instance that is currently edited in the editor view.
+    /// </summary>
+    [UsedImplicitly]
+    public WorkdayViewModel Day
+    {
+      get => this.day;
+
+      set => this.Set(ref this.day, value);
     }
 
     /// <summary>
@@ -39,24 +69,35 @@ namespace TimeTool.ViewModels
     /// </summary>
     public Visibility Visibility
     {
-      get
-      {
-        return this.visibility;
-      }
+      get => this.visibility;
 
-      set
-      {
-        this.Set(ref this.visibility, value);
-      }
+      set => this.Set(ref this.visibility, value);
     }
 
     /// <summary>
     /// Opens the editor window.
     /// </summary>
     /// <param name="message">The received message instance.</param>
-    private void ShowEditor(OpenEditorMessage message)
+    private void ToggleVisibility(OpenEditorMessage message)
     {
-      this.Visibility = Visibility.Visible;
+      if (this.Visibility == Visibility.Visible)
+      {
+        this.Visibility = Visibility.Collapsed;
+      }
+      else
+      {
+        this.Visibility = Visibility.Visible;
+        this.editorView.Show();
+      }
+    }
+
+    /// <summary>
+    /// Updates the view with the data of the specified <paramref name="message"/>.
+    /// </summary>
+    /// <param name="message">Contais the currently selected <see cref="WorkDayEditorViewModel"/> instance.</param>
+    private void UpdateView(SelectedDayChangedMessage message)
+    {
+      this.Day = message.Day;
     }
   }
 }

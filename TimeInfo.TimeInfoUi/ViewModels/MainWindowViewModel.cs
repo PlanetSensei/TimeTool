@@ -15,9 +15,9 @@ namespace TimeTool.ViewModels
   using DataAccess;
   using GalaSoft.MvvmLight;
   using GalaSoft.MvvmLight.CommandWpf;
+  using GalaSoft.MvvmLight.Messaging;
+  using Infrastructure;
   using Properties;
-
-  using TimeTool.Views;
 
   /// <summary>
   /// Provides interaction logic for the MainWindow.xaml view.
@@ -60,6 +60,7 @@ namespace TimeTool.ViewModels
     /// </summary>
     public MainWindowViewModel()
     {
+      var workDayEditorViewModel = new WorkDayEditorViewModel();
     }
 
     /// <summary>
@@ -123,6 +124,7 @@ namespace TimeTool.ViewModels
       set
       {
         this.Set(ref this.today, value);
+        Messenger.Default.Send(new SelectedDayChangedMessage(this.Today));
       }
     }
 

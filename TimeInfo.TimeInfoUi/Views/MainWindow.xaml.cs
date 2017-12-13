@@ -6,16 +6,12 @@
 
 namespace TimeTool.Views
 {
-  using System;
   using System.Windows;
 
   using GalaSoft.MvvmLight.Messaging;
 
   using TimeTool.Infrastructure;
   using TimeTool.ViewModels;
-
-  using Xceed.Wpf.DataGrid;
-  using Xceed.Wpf.Toolkit;
 
   /// <summary>
   /// Interaction logic for MainWindow.xaml
