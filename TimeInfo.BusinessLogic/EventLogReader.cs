@@ -9,11 +9,13 @@ namespace TimeTool.BusinessLogic
   using System;
   using System.Collections.Generic;
   using System.Diagnostics;
+  using System.Diagnostics.CodeAnalysis;
   using System.Linq;
 
   /// <summary>
   /// Provides access to information within the windows event logs.
   /// </summary>
+  [ExcludeFromCodeCoverage]
   internal static class EventLogReader
   {
     /// <summary>
@@ -106,24 +108,64 @@ namespace TimeTool.BusinessLogic
     /// </summary>
     /// <param name="day">The day for which the inforation is gathered.</param>
     /// <returns>Returns the found most appropriate work end of the day.</returns>
+    /// <remarks>
+    /// <para>
+    /// Tracking User Logon Activity Using Logon Events
+    ///   https://blogs.msdn.microsoft.com/ericfitz/2008/08/20/tracking-user-logon-activity-using-logon-events/
+    /// </para>
+    /// <list type="table">
+    ///   <listheader>
+    ///     <term>Code</term>
+    ///     <description>Description</description>
+    ///   </listheader>
+    ///   <item>
+    ///     <term>512 / 4608</term>
+    ///     <description>STARTUP</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>513 / 4609</term>
+    ///     <description>SHUTDOWN</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>528 / 4624</term>
+    ///     <description>LOGON</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>538 / 4634</term>
+    ///     <description>LOGOFF</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>551 / 4647</term>
+    ///     <description>BEGIN_LOGOFF &lt;= Sieht am vielversprechendsten aus. Beachte Sicherheits-ID garbsen1\[Benutzername] oder Kontoname = [Benutzernamen]</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>N/A / 4778</term>
+    ///     <description>SESSION_RECONNECTED</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>N/A / 4779</term>
+    ///     <description>SESSION_DISCONNECTED</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>N/A / 4800</term>
+    ///     <description>WORKSTATION_LOCKED</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>4801</term>
+    ///     <description>WORKSTATION_UNLOCKED</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>N/A / 4802</term>
+    ///     <description>SCREENSAVER_INVOKED</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>N/A / 4803</term>
+    ///     <description>SCREENSAVER_DISMISSED</description>
+    ///   </item>
+    /// </list>
+    /// </remarks>
     internal static DateTime GetLogOff(DateTime day)
     {
-      // Tracking User Logon Activity Using Logon Events
-      // https://blogs.msdn.microsoft.com/ericfitz/2008/08/20/tracking-user-logon-activity-using-logon-events/
-      /*
-       * 512 / 4608  STARTUP
-       * 513 / 4609  SHUTDOWN
-       * 528 / 4624  LOGON
-       * 538 / 4634  LOGOFF
-       * 551 / 4647  BEGIN_LOGOFF <= Sieht am vielversprechendsten aus. Beachte Sicherheits-ID garbsen1\[Benutzername] oder Kontoname = [Benutzernamen]
-       * N/A / 4778  SESSION_RECONNECTED
-       * N/A / 4779  SESSION_DISCONNECTED
-       * N/A / 4800  WORKSTATION_LOCKED
-       * 4801    WORKSTATION_UNLOCKED
-       * N/A / 4802  SCREENSAVER_INVOKED
-       * N/A / 4803  SCREENSAVER_DISMISSED
-       */
-
       // Not totally accurate. But at the moment the best I can do.
       IList<EventLogEntry> entries = GetLogOffFromEventLog(EventLogSecurity, BeginLogOff, day);
 

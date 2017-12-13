@@ -10,7 +10,7 @@ namespace TimeTool.DataAccess
   using System.Collections.Generic;
   using System.Linq;
 
-  using TimeTool.Contracts;
+  using Contracts;
 
   /// <summary>
   /// Provides access to work day information in the database.
@@ -20,13 +20,23 @@ namespace TimeTool.DataAccess
     /// <summary>
     /// The database instance that is managed by this class.
     /// </summary>
-    private readonly WorkdayRepository repository;
+    private readonly IWorkdayRepository repository;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WorkdayAccess"/> class.
+    /// </summary>
+    /// <param name="repository">The object that provides access to the datasource.</param>
+    public WorkdayAccess(IWorkdayRepository repository)
+    {
+      this.repository = repository;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WorkdayAccess"/> class.
     /// </summary>
     /// <param name="databaseLocation">Contains the fully qualified location and name of the database file.</param>
     public WorkdayAccess(string databaseLocation)
+      : this(new WorkdayRepository(databaseLocation))
     {
       if (string.IsNullOrWhiteSpace(databaseLocation))
       {
@@ -151,9 +161,9 @@ namespace TimeTool.DataAccess
     {
       if (isDisposing)
       {
-        if (this.repository != null)
+        if (this.repository is IDisposable disposableRepo)
         {
-          this.repository.Dispose();
+          disposableRepo.Dispose();
         }
       }
 

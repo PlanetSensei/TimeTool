@@ -7,12 +7,12 @@
 namespace TimeTool.BusinessLogic
 {
   using System;
-
-  using TimeTool.Contracts;
+  using System.Diagnostics.CodeAnalysis;
 
   /// <summary>
   /// Provides information about the current user.
   /// </summary>
+  [ExcludeFromCodeCoverage]
   public static class UserInfo
   {
     /// <summary>

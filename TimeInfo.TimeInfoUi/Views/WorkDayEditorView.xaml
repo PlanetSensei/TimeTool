@@ -18,6 +18,7 @@
   
   <Grid>
 
+    <!-- TODO: Add DATE of current day -->
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition Height="50" />
@@ -77,10 +78,14 @@
                Grid.Row="3"
                Content="End-Zeit" />
 
-        <xctk:TimeSpanUpDown Grid.Column="1"
-                             Grid.Row="3"
-                             ShowButtonSpinner="False"
-                             Value="{Binding Path=Day.EndTime, UpdateSourceTrigger=PropertyChanged}" />
+        <xctk:TimePicker Grid.Column="1"
+                         Grid.Row="3"
+                         FormatString="HH:mm:ss"
+                         Format="Custom"
+                         ShowButtonSpinner="False"
+                         ShowDropDownButton="False"
+                         UpdateValueOnEnterKey="True"
+                         Value="{Binding Path=Day.EndTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
       </Grid>
 

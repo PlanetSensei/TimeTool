@@ -17,7 +17,7 @@ namespace TimeTool.DataAccess
   /// <summary>
   /// Provides access to the actual databaseand abstracts it from the rest of the code.
   /// </summary>
-  internal class WorkdayRepository : IDisposable
+  public class WorkdayRepository : IWorkdayRepository, IDisposable
   {
     /// <summary>
     /// The name of the work days collection in the database.
@@ -40,7 +40,7 @@ namespace TimeTool.DataAccess
     ///     <item>Consists of only whitespaces</item>
     ///   </list>
     /// </exception>
-    internal WorkdayRepository(string databaseLocation)
+    public WorkdayRepository(string databaseLocation)
     {
       if (string.IsNullOrWhiteSpace(databaseLocation))
       {
@@ -70,7 +70,7 @@ namespace TimeTool.DataAccess
     /// Returns all days of the underlying collection.
     /// </summary>
     /// <returns>Returns all avalaible day objects.</returns>
-    internal Workday[] GetDays()
+    public Workday[] GetDays()
     {
       // TODO: Refine this for just a single month/ year.
       var workdays = this.Days;
@@ -83,7 +83,7 @@ namespace TimeTool.DataAccess
     /// Adds a new <see cref="IWorkdayInfo"/> object into the database.
     /// </summary>
     /// <param name="day">The object that will be saved.</param>
-    internal void Insert(IEnumerable<Workday> day)
+    public void Insert(IEnumerable<Workday> day)
     {
       this.Days.InsertBulk(day);
     }
@@ -92,7 +92,7 @@ namespace TimeTool.DataAccess
     /// Saves the values of the specified work day instance.
     /// </summary>
     /// <param name="day">The current workday instance.</param>
-    internal void Update(IWorkdayInfo day)
+    public void Update(IWorkdayInfo day)
     {
       var targetDay = this.Days.FindOne(d => d.WorkdayId == day.WorkdayId);
 
