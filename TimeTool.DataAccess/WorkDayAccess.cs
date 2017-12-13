@@ -123,8 +123,14 @@ namespace TimeTool.DataAccess
     /// Saves the specified collection <paramref name="allDays"/> into the database.
     /// </summary>
     /// <param name="allDays">Contains all available workdays of the current month.</param>
+    /// <exception cref="ArgumentNullException">Parameter <paramref name="allDays"/>must not be <see langword="null"/>.</exception>
     public void Save(IEnumerable<IWorkdayInfo> allDays)
     {
+      if (allDays == null)
+      {
+        throw new ArgumentNullException(nameof(allDays), "The specified parameter must not be NULL");
+      }
+
       // TODO: Refactor the repository so that it can save the objects in bulk.
       foreach (var day in allDays)
       {

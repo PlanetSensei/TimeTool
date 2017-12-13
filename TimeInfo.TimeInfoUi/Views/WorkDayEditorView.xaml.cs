@@ -13,13 +13,13 @@ namespace TimeTool.Views
   /// <summary>
   /// Interaction logic for WorkDayEditorView.xaml
   /// </summary>
-  public partial class WorkDayEditorView : Window
+  public partial class WorkdayEditorView : Window
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="WorkDayEditorView"/> class.
+    /// Initializes a new instance of the <see cref="WorkdayEditorView"/> class.
     /// <inheritdoc />
     /// </summary>
-    public WorkDayEditorView()
+    public WorkdayEditorView()
     {
       this.InitializeComponent();
     }

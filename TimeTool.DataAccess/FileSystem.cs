@@ -28,7 +28,7 @@ namespace TimeTool.DataAccess
     /// Finds the folder where the user specific application files will be stored.
     /// </summary>
     /// <returns>Returns the fully assembled application path.</returns>
-    public static string GetUserAppFolder()
+    public static string FindUserAppFolder()
     {
       var roaminFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
       var appFolder = Path.Combine(roaminFolder, ApplicationName);
@@ -41,10 +41,10 @@ namespace TimeTool.DataAccess
     /// <summary>
     /// Finds the fully qualified folder and file name to the work time database.
     /// </summary>
-    /// <returns>Retrns thefully qualified database file loaction.</returns>
-    public static string GetDatabaseFile()
+    /// <returns>Returns the fully qualified database file loaction.</returns>
+    public static string FindDatabaseFile()
     {
-      var appFolder = GetUserAppFolder();
+      var appFolder = FindUserAppFolder();
       var databaseLocation = Path.Combine(appFolder, DatabaseFile);
 
       return databaseLocation;

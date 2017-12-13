@@ -137,10 +137,13 @@ namespace TimeTool.ViewModels
       }
     }
 
+    /// <summary>
+    /// Initializes data that is needed fot this class.
+    /// </summary>
     internal void Initialize()
     {
       // Initialize other stuff.
-      this.database = FileSystem.GetDatabaseFile();
+      this.database = FileSystem.FindDatabaseFile();
 
       this.AllDaysInMonth = new ObservableCollection<WorkdayViewModel>();
       this.GetAllDays(DateTime.Now.Year, DateTime.Now.Month);

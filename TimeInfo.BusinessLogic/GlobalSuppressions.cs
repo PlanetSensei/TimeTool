@@ -18,4 +18,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Scope = "member", Target = "TimeTool.BusinessLogic.UserInfo.#GetLastLogOnToMachine()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "OnTo", Scope = "member", Target = "TimeTool.BusinessLogic.UserInfo.#GetLastLogOnToMachine()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "OnTo", Scope = "member", Target = "TimeTool.BusinessLogic.UserInfo.#GetLastLogOnToMachine(System.DateTime)")]
 
