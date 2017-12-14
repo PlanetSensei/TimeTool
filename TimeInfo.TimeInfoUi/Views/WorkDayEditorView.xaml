@@ -7,8 +7,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Workday Editor"
-        Height="230"
-        Width="220"
+        Height="260"
+        Width="250"
         Visibility="{Binding Path=Visibility}">
 
   <!-- Initialize the ViewModel -->
@@ -19,6 +19,7 @@
   <Grid>
 
     <!-- TODO: Add DATE of current day -->
+    <!-- TODO: Update EndDate correctly into viewModel -->
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition Height="50" />
@@ -41,14 +42,25 @@
           <RowDefinition Height="25" />
           <RowDefinition Height="25" />
           <RowDefinition Height="25" />
+          <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
         <Label Grid.Column="0"
                Grid.Row="0"
+               Content="Datum" />
+
+        <TextBox Grid.Column="1"
+                 Grid.Row="0"
+                 IsReadOnly="True"
+                 HorizontalContentAlignment="Right"
+                 Text="{Binding Path=Day.StartTime.Date, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=dd.MM.yyyy}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="1"
                Content="Start-Zeit" />
 
         <xctk:TimePicker Grid.Column="1"
-                         Grid.Row="0"
+                         Grid.Row="1"
                          FormatString="HH:mm:ss"
                          Format="Custom"
                          ShowButtonSpinner="False"
@@ -57,29 +69,29 @@
                          Value="{Binding Path=Day.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <Label Grid.Column="0"
-               Grid.Row="1"
-               Content="Pause"/>
-
-        <xctk:TimeSpanUpDown Grid.Column="1"
-                             Grid.Row="1"
-                             ShowButtonSpinner="False"
-                             Value="{Binding Path=Day.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
-
-        <Label Grid.Column="0"
                Grid.Row="2"
-               Content="Soll-Zeit" />
+               Content="Pause"/>
 
         <xctk:TimeSpanUpDown Grid.Column="1"
                              Grid.Row="2"
                              ShowButtonSpinner="False"
-                             Value="{Binding Path=Day.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
+                             Value="{Binding Path=Day.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Column="0"
                Grid.Row="3"
+               Content="Soll-Zeit" />
+
+        <xctk:TimeSpanUpDown Grid.Column="1"
+                             Grid.Row="3"
+                             ShowButtonSpinner="False"
+                             Value="{Binding Path=Day.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="4"
                Content="End-Zeit" />
 
         <xctk:TimePicker Grid.Column="1"
-                         Grid.Row="3"
+                         Grid.Row="4"
                          FormatString="HH:mm:ss"
                          Format="Custom"
                          ShowButtonSpinner="False"
@@ -96,12 +108,12 @@
                 HorizontalAlignment="Right">
 
       <Button Width="80"
-              Margin="15"
+              Margin="10"
               DockPanel.Dock="Right"
               Content="Abbrechen" />
 
       <Button Width="80"
-              Margin="15"
+              Margin="10"
               DockPanel.Dock="Right"
               Content="OK" />
 

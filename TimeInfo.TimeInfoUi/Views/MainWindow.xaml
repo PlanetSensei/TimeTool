@@ -70,14 +70,25 @@
           <RowDefinition Height="25" />
           <RowDefinition Height="25" />
           <RowDefinition Height="25" />
+          <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
         <Label Grid.Column="0"
                Grid.Row="0"
+               Content="Datum" />
+
+        <TextBox Grid.Column="1"
+                 Grid.Row="0"
+                 IsReadOnly="True"
+                 HorizontalContentAlignment="Right"
+                 Text="{Binding Path=Today.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=dd.MM.yyyy}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="1"
                Content="Startzeit" />
 
         <xctk:TimePicker Grid.Column="1"
-                         Grid.Row="0"
+                         Grid.Row="1"
                          FormatString="HH:mm:ss"
                          Format="Custom"
                          ShowButtonSpinner="False"
@@ -86,20 +97,20 @@
                          Value="{Binding Path=Today.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <Label Grid.Column="0"
-               Grid.Row="1"
+               Grid.Row="2"
                Content="Pause"/>
 
         <xctk:TimeSpanUpDown Grid.Column="1"
-                             Grid.Row="1"
+                             Grid.Row="2"
                              ShowButtonSpinner="False"
                              Value="{Binding Path=Today.TotalBreakLength, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Column="0"
-               Grid.Row="2"
+               Grid.Row="3"
                Content="Soll-Zeit" />
 
         <xctk:TimeSpanUpDown Grid.Column="1"
-                             Grid.Row="2"
+                             Grid.Row="3"
                              ShowButtonSpinner="False"
                              Value="{Binding Path=Today.DefaultWorkLength, UpdateSourceTrigger=PropertyChanged}" />
 

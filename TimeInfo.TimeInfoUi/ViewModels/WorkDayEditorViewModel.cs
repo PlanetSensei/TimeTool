@@ -22,18 +22,18 @@ namespace TimeTool.ViewModels
     /// <summary>
     /// The acutual editor window.
     /// </summary>
-    private readonly WorkdayEditorView editorView;
+    private WorkdayEditorView editorView;
+
+    /// <summary>
+    /// Gets or sets the <see cref="IWorkdayInfo"/> instance that is currently edited in the editor view.
+    /// </summary>
+    private WorkdayViewModel day;
 
     /// <summary>
     /// Gets or sets a value indicating whether this window is
     /// visible (<see langword="true"/>) or not (<see langword="false"/>).
     /// </summary>
     private Visibility visibility;
-
-    /// <summary>
-    /// Gets or sets the <see cref="IWorkdayInfo"/> instance that is currently edited in the editor view.
-    /// </summary>
-    private WorkdayViewModel day;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WorkDayEditorViewModel"/> class.
