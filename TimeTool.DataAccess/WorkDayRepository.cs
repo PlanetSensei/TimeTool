@@ -82,14 +82,14 @@ namespace TimeTool.DataAccess
     /// <summary>
     /// Adds a new <see cref="IWorkdayInfo"/> object into the database.
     /// </summary>
-    /// <param name="day">The object that will be saved.</param>
-    public void Insert(IEnumerable<Workday> day)
+    /// <param name="days">Contais a collection of <see cref="Workday"/> instances that should be saved.</param>
+    public void Insert(IEnumerable<Workday> days)
     {
-      this.Days.InsertBulk(day);
+      this.Days.InsertBulk(days);
     }
 
     /// <summary>
-    /// Saves the values of the specified work day instance.
+    /// Persists the specifed <see cref="IWorkdayInfo"/> instance into the database.
     /// </summary>
     /// <param name="day">The current workday instance.</param>
     public void Update(IWorkdayInfo day)
@@ -102,12 +102,47 @@ namespace TimeTool.DataAccess
     }
 
     /// <summary>
+    /// Persists the specifed <see cref="IWorkdayInfo"/> instances into the database in a bulk operation.
+    /// </summary>
+    /// <param name="days">Contains a collection of <see cref="IWorkdayInfo"/> instances that should be saved.</param>
+    public void Update(IEnumerable<IWorkdayInfo> days)
+    {
+      var workdays = CreateConcreteInstances(days);
+      this.Days.Update(workdays);
+    }
+
+    /// <summary>
+    /// Maps the objects that are referenced by interfaces into objects with a concrete type.
+    /// The underlying database needs concrete types to work correctly.
+    /// </summary>
+    /// <param name="sourceDays">The collection of days that should be saved.</param>
+    /// <returns>Returns a collection of concrete typed objects with the same values as the specified <paramref name="sourceDays"/>.</returns>
+    private static IEnumerable<Workday> CreateConcreteInstances(IEnumerable<IWorkdayInfo> sourceDays)
+    {
+      // TODO: Evaluate if this step is really neccessary?
+      var days = sourceDays.ToArray();
+
+      foreach (var source in days)
+      {
+        var target = new Workday();
+        MapValues(source, target);
+
+        yield return target;
+      }
+    }
+
+    /// <summary>
     /// Assigns the values of the source object to the corresponding properties of the target object.
     /// </summary>
     /// <param name="source">Contains the values that will be assigned to the target object.</param>
     /// <param name="target">Receives the values of the source object.</param>
     private static void MapValues(IWorkdayInfo source, Workday target)
     {
+      if (source.WorkdayId > 0)
+      {
+        target.WorkdayId = source.WorkdayId;
+      }
+
       target.StartTime = source.StartTime;
       target.EndTime = source.EndTime;
       target.DefaultWorkLength = source.DefaultWorkLength;

@@ -190,7 +190,7 @@ namespace TimeTool.ViewModels
     }
 
     /// <summary>
-    /// Assign the available work day objects to the colelction that is bound to the UI.
+    /// Assign the available work day objects to the collection that is bound to the UI.
     /// </summary>
     /// <param name="workdayInfos">The available work day objects.</param>
     private void AssignToUi(IWorkdayInfo[] workdayInfos)

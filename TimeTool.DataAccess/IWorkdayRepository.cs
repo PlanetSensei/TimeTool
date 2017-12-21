@@ -31,5 +31,11 @@ namespace TimeTool.DataAccess
     /// </summary>
     /// <param name="day">The current workday instance.</param>
     void Update(IWorkdayInfo day);
+
+    /// <summary>
+    /// Persists the specifed <see cref="IWorkdayInfo"/> instances into the database in a bulk operation.
+    /// </summary>
+    /// <param name="days">Contains a collection of <see cref="IWorkdayInfo"/> instances that should be saved.</param>
+    void Update(IEnumerable<IWorkdayInfo> days);
   }
 }
