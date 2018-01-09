@@ -55,12 +55,18 @@ namespace TimeTool.ViewModels
     private RelayCommand updateCommand;
 
     /// <summary>
+    /// Represents the viewModel of the editor view.
+    /// </summary>
+    // TODO: Is this really needed?
+    private WorkDayEditorViewModel workDayEditorViewModel;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
     /// <inheritdoc />
     /// </summary>
     public MainWindowViewModel()
     {
-      var workDayEditorViewModel = new WorkDayEditorViewModel();
+      this.workDayEditorViewModel = new WorkDayEditorViewModel();
     }
 
     /// <summary>

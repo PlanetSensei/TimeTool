@@ -36,6 +36,8 @@ namespace TimeTool.Views
     {
       var viewModel = (MainWindowViewModel)this.DataContext;
       viewModel.Save();
+
+      Messenger.Default.Send(new ApplicationClosingMessage());
     }
 
     /// <summary>

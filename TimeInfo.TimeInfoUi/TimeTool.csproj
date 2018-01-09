@@ -140,6 +140,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\ApplicationClosingMessage.cs" />
     <Compile Include="Infrastructure\OpenEditorMessage.cs" />
     <Compile Include="Infrastructure\OvertimeStyleConverter.cs" />
     <Compile Include="Infrastructure\SelectedDayChangedMessage.cs" />

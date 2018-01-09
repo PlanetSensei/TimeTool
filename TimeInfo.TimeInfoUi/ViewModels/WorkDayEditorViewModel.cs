@@ -45,9 +45,9 @@ namespace TimeTool.ViewModels
         DataContext = this
       };
 
-
       this.Visibility = Visibility.Hidden;
 
+      Messenger.Default.Register<ApplicationClosingMessage>(this, this.AppClosing);
       Messenger.Default.Register<OpenEditorMessage>(this, this.ToggleVisibility);
       Messenger.Default.Register<SelectedDayChangedMessage>(this, this.UpdateView);
     }
@@ -72,6 +72,15 @@ namespace TimeTool.ViewModels
       get => this.visibility;
 
       set => this.Set(ref this.visibility, value);
+    }
+
+    /// <summary>
+    /// Performs cleanup actions when the application gets closed.
+    /// </summary>
+    /// <param name="message">The message object that informs about the closing application.</param>
+    private void AppClosing(ApplicationClosingMessage message)
+    {
+      this.editorView?.Close();
     }
 
     /// <summary>
