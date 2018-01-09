@@ -22,6 +22,9 @@
   </Window.DataContext>
 
   <Window.Resources>
+
+    <infrastructure:TimeSpanToStringConverter x:Key="timeSpanConverter" />
+
     <infrastructure:OvertimeStyleConverter x:Key="overtimeColorConverter">
 
       <infrastructure:OvertimeStyleConverter.Overtime>
@@ -300,6 +303,23 @@
               
               <xGrid:Column.DisplayMemberBindingInfo>
                 <xGrid:DataGridBindingInfo Path="EndTime" >
+                </xGrid:DataGridBindingInfo>
+              </xGrid:Column.DisplayMemberBindingInfo>
+            </xGrid:Column>
+
+            <xGrid:Column FieldName="RemainingTime2"
+                          Title="Remaining Time2"
+                          ReadOnly="True">
+
+              <xGrid:Column.CellContentTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Converter={StaticResource timeSpanConverter}}"/>
+                  <!--<TextBlock Text="{Binding StringFormat=\-hh\:mm\:ss}"/>-->
+                </DataTemplate>
+              </xGrid:Column.CellContentTemplate>
+
+              <xGrid:Column.DisplayMemberBindingInfo>
+                <xGrid:DataGridBindingInfo Path="RemainingTime" >
                 </xGrid:DataGridBindingInfo>
               </xGrid:Column.DisplayMemberBindingInfo>
             </xGrid:Column>

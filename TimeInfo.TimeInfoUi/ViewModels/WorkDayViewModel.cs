@@ -83,6 +83,7 @@ namespace TimeTool.ViewModels
       set
       {
         this.endTime = value;
+        this.UpdateTimeValues();
       }
     }
 
