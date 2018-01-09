@@ -81,6 +81,10 @@ namespace TimeTool.ViewModels
     private void AppClosing(ApplicationClosingMessage message)
     {
       this.editorView?.Close();
+
+      Messenger.Default.Unregister<ApplicationClosingMessage>(this);
+      Messenger.Default.Unregister<OpenEditorMessage>(this);
+      Messenger.Default.Unregister<SelectedDayChangedMessage>(this);
     }
 
     /// <summary>
