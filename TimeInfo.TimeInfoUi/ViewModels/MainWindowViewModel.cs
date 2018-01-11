@@ -172,11 +172,7 @@ namespace TimeTool.ViewModels
       this.UpdateCommand = new RelayCommand(
         () =>
         {
-          this.Today.RemainingTime = Calculator.GetDeltaTime(
-            this.Today.StartTime,
-            this.Today.DefaultWorkLength,
-            this.Today.TotalBreakLength,
-            DateTime.Now);
+          this.Today.RemainingTime = DateCalculator.GetDeltaTime(this.Today, DateTime.Now);
         });
     }
 

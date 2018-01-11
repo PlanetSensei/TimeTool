@@ -163,8 +163,19 @@ namespace TimeTool.ViewModels
     /// </summary>
     private void UpdateTimeValues()
     {
-      this.RemainingTime = Calculator.GetDeltaTime(this.StartTime, this.DefaultWorkLength, this.TotalBreakLength, DateTime.Now);
-      this.TargetTime = Calculator.GetTargetTime(this.StartTime, this.DefaultWorkLength, this.TotalBreakLength);
+      DateTime currentTime;
+      if (this.EndTime > DateTime.MinValue)
+      {
+        currentTime = this.EndTime;
+      }
+      else
+      {
+        currentTime = DateTime.Now;
+      }
+
+      this.RemainingTime = DateCalculator.GetDeltaTime(this, currentTime);
+
+      this.TargetTime = DateCalculator.GetTargetTime(this.StartTime, this.DefaultWorkLength, this.TotalBreakLength);
     }
   }
 }
