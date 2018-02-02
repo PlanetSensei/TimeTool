@@ -163,15 +163,7 @@ namespace TimeTool.ViewModels
     /// </summary>
     private void UpdateTimeValues()
     {
-      DateTime currentTime;
-      if (this.EndTime > DateTime.MinValue)
-      {
-        currentTime = this.EndTime;
-      }
-      else
-      {
-        currentTime = DateTime.Now;
-      }
+      var currentTime = DateCalculator.GetCurrentTime(this);
 
       this.RemainingTime = DateCalculator.GetDeltaTime(this, currentTime);
 
