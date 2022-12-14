@@ -57,6 +57,11 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IWorkDayAccess.cs" />
     <Compile Include="IWorkdayRepository.cs" />
+    <Compile Include="Settings\Configurator.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Settings\SettingsObject.cs" />
+    <Compile Include="Settings\SettingsReader.cs" />
+    <Compile Include="Settings\SettingsWriter.cs" />
     <Compile Include="WorkDayAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkDayRepository.cs" />

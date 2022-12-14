@@ -145,6 +145,7 @@
     <Compile Include="Infrastructure\OvertimeStyleConverter.cs" />
     <Compile Include="Infrastructure\SelectedDayChangedMessage.cs" />
     <Compile Include="Infrastructure\TimeSpanToStringConverter.cs" />
+    <Compile Include="Models\WindowSettings.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\WorkDayEditorViewModel.cs" />
     <Compile Include="ViewModels\WorkDayViewModel.cs" />
